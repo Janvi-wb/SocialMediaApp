@@ -1,0 +1,2 @@
+- create vite app,  npm create vite@latest SocialMediaApp --template
+- yarn install

@@ -1,0 +1,177 @@
+// Define variables
+$font-family-base: sans-serif;
+$font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+$background-light: #fafafa;
+$background-white: #ffff;
+$border-color-light: #e6e6e6;
+$border-color-input: #efefef;
+$button-background: #3897f0;
+$button-color: #fff;
+$label-color: #999;
+$separator-color: #dbdbdb;
+$fb-color: #385185;
+$link-color: #003569;
+$signup-color: #3897f0;
+
+body {
+  font-family: $font-family-base;
+  background-color: $background-light;
+  font-family: $font-family-system;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  font-size: 14px;
+}
+
+.box {
+  max-width: 350px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: $background-white;
+  border: 1px solid $border-color-light;
+  border-radius: 1px;
+  margin: 0 0 10px;
+  padding: 10px 0;
+  flex-grow: 1;
+}
+
+.heading {
+  margin: 22px auto 12px;
+  background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_b20f2a3cd7e4.png/b20f2a3cd7e4.png");
+  background-position: -98px 0;
+  height: 51px;
+  width: 177px;
+  overflow: hidden;
+}
+
+.field {
+  margin: 10px 0;
+  position: relative;
+  font-size: 14px;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+input {
+  padding: 9px 0px 7px 9px;
+  font-size: 12px;
+  width: 16rem;
+  height: 1.2rem;
+  outline: none;
+  background: $background-light;
+  border-radius: 3px;
+  border: 1px solid $border-color-input;
+}
+
+// Label initial position
+label {
+  position: absolute;
+  pointer-events: none;
+  left: 10px;
+  padding-bottom: 15px;
+  transform: translateY(10px);
+  line-height: 6px;
+  transition: all ease-out 0.1s;
+  font-size: 14px;
+  color: $label-color;
+  padding-top: 6px;
+}
+
+// Hiding placeholder in all browsers
+input::placeholder {
+  visibility: hidden;
+}
+
+// Hiding placeholder in Mozilla
+.login-form ::-moz-placeholder {
+  color: transparent;
+}
+
+// Label final position when input is not empty
+input:not(:placeholder-shown) + label {
+  transform: translateY(0);
+  font-size: 11px;
+}
+
+// Input padding adjustment when placeholder is not shown
+input:not(:placeholder-shown) {
+  padding-top: 14px;
+  padding-bottom: 2px;
+}
+
+.login-button {
+  text-align: center;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  background-color: $button-background;
+  color: $button-color;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 7px;
+}
+
+.separator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $label-color;
+  margin-top: 6px;
+
+  .line {
+    height: 1px;
+    width: 40%;
+    background-color: $separator-color;
+  }
+}
+
+.other {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.fb-login-btn {
+  margin: 1rem;
+  border: 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: $fb-color;
+  font-weight: 600;
+  background: transparent;
+}
+
+.fb-icon {
+  color: $fb-color;
+  font-size: 1rem;
+  padding-right: 1px;
+}
+
+.forgot-password {
+  font-size: 11px;
+  color: $link-color;
+}
+
+.signup {
+  color: $signup-color;
+  font-weight: 600;
+}
