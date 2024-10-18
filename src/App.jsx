@@ -1,4 +1,4 @@
-import appStore from "../store/appStore.jsx";
+import appStore from "../store/appStore.js"
 import "./App.css";
 import Body from "./components/Body.jsx";
 import { Provider } from "react-redux";
