@@ -1,55 +1,179 @@
-.post {
-    flex-grow: 1;
-    margin-top: 15px;
-    overflow-y: auto;
-    background-color: #fff;
-    border: 1px solid #dbdbdb;
+:root{
+    --background-color:rgb(252, 251, 251);
+    --font-color:rgb(0, 0, 0);
+    --secod-font-color:rgb(101, 101, 101);
+    --secondary-font-color : rgb(179, 179, 179);
+    --background-on-hover:rgb(215, 214, 214);
+}
+.dark-mode{
+    --background-color:rgb(15, 15, 15);
+    --font-color:rgb(254, 252, 252);
+    --secod-font-color:rgb(197, 195, 195);
+    --secondary-font-color : rgb(108, 106, 106);
+    --background-on-hover:rgba(52, 51, 51, 0.834);
+}
+
+
+///
+/// 
+.post-area {
+    // margin-top: 50px;
+    // padding-inline: 80px;
+    // margin-bottom: 50px;
+  }
   
-    .post-header {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #dbdbdb;
+  .post-main {
+    color: var(--font-color);
+  }
   
-      .profile-picture {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-      }
+  .post-image {
+    width: 40px;
+    height: 40px;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   
-      .profile-name {
-        font-weight: bold;
-      }
+    img {
+      width: 90%;
+      height: 90%;
+      border: 2px solid var(--background-color);
+      border-radius: 50%;
     }
+  }
   
-    .post-body {
-      .post-image {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-      }
-    }
+  .post-username {
+    color: var(--font-color);
+    font-size: 1rem;
+  }
   
-    .post-footer {
-      padding: 10px;
+  .one-day {
+    font-size: 0.8rem;
+    color: var(--secod-font-color);
+  }
   
-      .post-actions {
-        display: flex;
-        justify-content: flex-start;
-        font-size: 1.5rem;
-        margin-bottom: 10px;
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-inline: 5px;
   
-        .post-action {
-          margin-right: 15px;
-          cursor: pointer;
-        }
-      }
+    i {
+      color: var(--font-color);
+      cursor: pointer;
+      transition: all 0.2s ease;
   
-      .post-caption {
-        font-size: 0.9rem;
+      &:hover {
+        color: var(--secondary-font-color);
       }
     }
   }
+  
+  .post-left-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  
+    i {
+      color: rgb(85, 85, 250);
+  
+      &:hover {
+        color: rgb(30, 30, 150);
+      }
+    }
+  }
+  
+  .post-main-image {
+    margin-top: 10px;
+    width: 100%;
+  
+    img {
+      width: 100%;
+      border-radius: 1px;
+    }
+  }
+  
+  .post-fotter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7px;
+    padding-inline: 5px;
+  
+    i {
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+  
+      &:hover {
+        color: var(--secondary-font-color);
+      }
+    }
+  
+    .post-fotter-left {
+      display: flex;
+      gap: 20px;
+    }
+  }
+  
+  .post-description {
+    margin-block: 3px;
+    padding-inline: 5px;
+  }
+  
+  .post-liked {
+    margin-block: 7px;
+    font-size: 0.8rem;
+    color: var(--font-color);
+    cursor: pointer;
+  }
+  
+  .title {
+    font-size: 0.9rem;
+    color: var(--font-color);
+    cursor: pointer;
+  
+    span {
+      color: var(--secod-font-color);
+      font-weight: bold;
+    }
+  }
+  
+  .comments {
+    margin-block: 10px;
+    font-size: 0.8rem;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .add-comment {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  
+    input {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #e6e6e6;
+      padding: 5px 10px;
+      font-size: 14px;
+      outline: none;
+      background-color: #fafafa;
+      color: #000;
+  
+      &::placeholder {
+        color: #8e8e8e;
+        opacity: 1;
+      }
+    }
+  }
+
+  .dots {
+    width: 27px;
+    margin-right: 10px;
+  }
+  
   

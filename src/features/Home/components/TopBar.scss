@@ -1,27 +1,41 @@
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border-bottom: 1px solid #dbdbdb;
+
+  .search-bar {
+    width: 30%;
+    padding: 5px;
+    border-radius: 7px;
+    border: 1px solid #dbdbdb;
+    background-color: #fafafa;
+    color: #262626;
+  }
+
+  .logo {
+    margin: 0px 15px;
     padding: 10px;
-    background-color: #fff;
-    border-bottom: 1px solid #dbdbdb;
-  
-    .search-bar {
-      width: 70%;
-      padding: 8px;
-      border-radius: 15px;
-      border: 1px solid #dbdbdb;
-      background-color: #fafafa;
-      color: #262626;
-    }
-  
-    .top-icons {
-      display: flex;
-  
-      .top-icon {
-        margin-left: 15px;
-        font-size: 1.5rem;
-      }
+    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_b20f2a3cd7e4.png/b20f2a3cd7e4.png");
+    background-position: 2px -287px;
+    height: 30px;
+    width: 130px;
+    overflow: hidden;
+  }
+
+  .top-icons {
+    display: flex;
+
+    .top-icon {
+      margin-left: 15px;
+      font-size: 1.5rem;
     }
   }
-  
+}
+
+.input::placeholder {
+    color: gray;
+    opacity: 1;
+}

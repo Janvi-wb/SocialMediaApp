@@ -3,10 +3,10 @@ import './TopBar.scss';
 const TopBar = () => {
   return (
     <div className="top-bar">
+        <div className="logo"></div>
       <input type="text" placeholder="Search" className="search-bar" />
       <div className="top-icons">
-        <span className="top-icon">&#x2665;</span>
-        <span className="top-icon">&#128276;</span>
+        <i className="fa-regular fa-heart"></i>
       </div>
     </div>
   );

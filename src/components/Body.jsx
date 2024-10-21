@@ -4,6 +4,7 @@ import Home from "../features/Home/Home";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { addCredentials } from "../../store/userSlice";
+import Profile from "../features/Profile/Profile";
 
 const Body = () => {
 
@@ -29,6 +30,10 @@ const Body = () => {
     {
         path: "/home",
         element: <Home />
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     }
    ])
    
