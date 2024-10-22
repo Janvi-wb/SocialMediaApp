@@ -3,10 +3,14 @@ import userReducer from "./userSlice";
 import { authApiSlice } from "./authApiSlice";
 import { profileApiSlice } from "./profileApiSlice";
 import { postApiSlice } from "./postApiSlice";
+import profileReducer from "./profileSlice";
+import postReducer from "./postSlice"
 
 const appStore = configureStore({
   reducer: {
     user: userReducer,
+    profile: profileReducer,
+    myPosts: postReducer,
     [authApiSlice.reducerPath]: authApiSlice.reducer,
     [profileApiSlice.reducerPath]: profileApiSlice.reducer,
     [postApiSlice.reducerPath]: postApiSlice.reducer,

@@ -15,8 +15,9 @@ export const useRegisterUser = () => {
   const userLogin = async (data) => {
     try {
       const response = await login(data).unwrap();
-      console.log(response.data);
+      console.log(response, "RESPONSE");
       if (response.success) {
+        console.log(response.data.user, "USER");
         dispatch(
           addCredentials({
             user: response.data.user,
@@ -40,6 +41,7 @@ export const useRegisterUser = () => {
     try{
       const response = await signup(data).unwrap();
       if(response.success) {
+        console.log(response.data);
         dispatch(addCredentials({
           user: response.data.user,
           token: response.data.accessToken,

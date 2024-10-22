@@ -109,13 +109,16 @@ import TopBar from "./components/TopBar";
 import Stories from "./components/Stories";
 import Post from "./components/Post";
 import Footer from "./components/Footer";
+import { useProfile } from "./hooks/useProfile";
 
 const Home = () => {
   const { data: allPost, isLoading, error } = useGetAllPostsQuery();
+  
+  const {isLoading: isProfileLoading, isError: profileError} = useProfile();
 
-  if (isLoading) return <h4>Loading...</h4>;
+  if (isLoading ||  isProfileLoading) return <h4>Loading...</h4>;
 
-  if (error) return <p>Error fetching posts</p>;
+  if (error || profileError) return <p>Error fetching posts</p>;
 
   const posts = allPost?.data?.posts || [];
 
@@ -126,7 +129,7 @@ const Home = () => {
       <TopBar />
 
       {posts.length > 0 && (
-        <Stories avatarUrl={posts[0]?.author?.coverImage?.url} />
+        <Stories />
       )}
 
       <div className="post-section">
@@ -147,7 +150,7 @@ const Home = () => {
         ))}
       </div>
 
-      <Footer profilePicture={posts[0]?.author?.coverImage?.url} />
+      <Footer />
     </div>
   );
 };

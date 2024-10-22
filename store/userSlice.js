@@ -8,7 +8,6 @@ const userSlice = createSlice({
       const { user, token } = action.payload;
       state.token = token;
       state.user = user;
-      console.log(user, token);
     },
     logout: (state) => {
       state.user = null;
@@ -18,7 +17,7 @@ const userSlice = createSlice({
 });
 
 export const currentUser = (state) => state.user.user;
-export const currentToken = (state) => state.user.user;
+export const currentToken = (state) => state.user.token;
 
 export const { addCredentials, logout } = userSlice.actions;
 export default userSlice.reducer;

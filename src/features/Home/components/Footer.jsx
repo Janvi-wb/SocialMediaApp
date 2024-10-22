@@ -1,17 +1,15 @@
 import { Link } from "react-router-dom/dist";
-import {
-  CREATE_POST_ICON_URL,
-  HOME_ICON_URL,
-  NAVIGATOR_ICON_URL,
-  REEL_ICON_URL,
-} from "../../../../utils/constants";
 import "./Footer.scss";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const Footer = ({ profilePicture }) => {
+const Footer = () => {
+  const profilePicture = useSelector(
+    (store) => store.profile.profile.account.avatar.url
+  );
   return (
     <div className="footer">
-      <span className="footer-icon">
+      {/* <span className="footer-icon">
         <img className="icon-img" src={HOME_ICON_URL} />
       </span>
       <span className="footer-icon">
@@ -22,11 +20,14 @@ const Footer = ({ profilePicture }) => {
       </span>
       <span className="footer-icon">
         <img className="icon-img" src={CREATE_POST_ICON_URL} />
-      </span>
+      </span> */}
+      <i className="fa-solid fa-house"></i>
+      <i className="fa-regular fa-compass"></i>
+      <i className="fa-solid fa-square-plus"></i>
+      <i className="fa-solid fa-clapperboard"></i>
+
       <Link to="/profile">
-        <span className="footer-icon">
-          <img className="icon-img" src={profilePicture} />
-        </span>
+        <img className="profile-img" src={profilePicture} />
       </Link>
     </div>
   );

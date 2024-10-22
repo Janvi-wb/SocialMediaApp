@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types'; 
 import './Stories.scss';
+import { useSelector } from 'react-redux';
 
-const Stories = ({ avatarUrl }) => {
+const Stories = () => {
+    const profilePicture = useSelector(store => store.profile.profile.coverImage.url);
+
   return (
     <div className="stories">
       <div className="story">
         <img
-          src={avatarUrl || 'https://via.placeholder.com/40x40.png'}
+          src={profilePicture}
           alt={"Story"}
           className="story-image"
         />
