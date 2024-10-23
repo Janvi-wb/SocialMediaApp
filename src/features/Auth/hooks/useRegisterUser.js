@@ -15,7 +15,7 @@ export const useRegisterUser = () => {
   const userLogin = async (data) => {
     try {
       const response = await login(data).unwrap();
-      console.log(response, "RESPONSE");
+      //console.log(response, "RESPONSE");
       if (response.success) {
         console.log(response.data.user, "USER");
         dispatch(
@@ -26,10 +26,10 @@ export const useRegisterUser = () => {
         );
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        console.log("Login successfull!");
+        //console.log("Login successfull!");
         navigate("/home");
       } else {
-        console.log(response?.message);
+        //console.log(response?.message);
       }
     } catch (e) {
       console.log(e?.data?.message);
@@ -37,19 +37,19 @@ export const useRegisterUser = () => {
   };
 
   const userSignup = async (data, toggleForm) => {
-    console.log(data, "VALUE");
+    //console.log(data, "VALUE");
     try{
       const response = await signup(data).unwrap();
       if(response.success) {
-        console.log(response.data);
+        //console.log(response.data);
         dispatch(addCredentials({
           user: response.data.user,
           token: response.data.accessToken,
         }));
-        console.log("Signup Successfully!");
+        //console.log("Signup Successfully!");
         toggleForm();
       } else {
-        console.log(response?.message);
+        //console.log(response?.message);
       }
     } catch (e) {
       console.log(e);

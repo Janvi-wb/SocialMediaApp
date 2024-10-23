@@ -15,7 +15,7 @@ const Post = ({
   createdAt,
   isLiked,
   isBookmarked,
-  likes
+  likes,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [comment, setComment] = useState("");
@@ -28,7 +28,6 @@ const Post = ({
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
-
 
   // Determine which description to show
   const descriptionText = isExpanded
@@ -53,7 +52,10 @@ const Post = ({
               . {getTimeDifference(createdAt)}{" "}
             </span>{" "}
           </div>
-          <img className="dots" src="https://clipground.com/images/three-dots-png-1.png" />
+          <img
+            className="dots"
+            src="https://clipground.com/images/three-dots-png-1.png"
+          />
         </div>
         <div className="post-main-image">
           <img
@@ -63,7 +65,7 @@ const Post = ({
         </div>
         <div className="post-fotter">
           <div className="post-fotter-left">
-          <i
+            <i
               className={`fa-${isLiked ? "solid" : "regular"} fa-heart`}
               style={{ color: isLiked ? "red" : "black" }}
             ></i>
@@ -77,7 +79,9 @@ const Post = ({
           {/* <i className="fa-solid fa-bookmark" /> */}
         </div>
         <div className="post-description">
-          <p className="post-liked"><strong>{likes} Likes</strong></p>
+          <p className="post-liked">
+            <strong>{likes} Likes</strong>
+          </p>
           <p className="title">
             <strong>{profileName}</strong> {descriptionText}
             {caption.split(" ").length > 10 && !isExpanded && (

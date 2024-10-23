@@ -1,141 +1,186 @@
-// // // import React from 'react';
-// // import "./home.scss";
-// // import { useProfile } from "./hooks/useProfile";
-
-// // const Home = () => {
-// //   const {profile, isLoading, error} = useProfile();
-// //   console.log(profile?.account?.avatar?.url, "AVATAR");
-
-// //   if(isLoading) return <h4>Loading...</h4>
-// //   if(error) return <p>Error fetching profile: {error.message}</p>
-
-// //   return (
-// //     <div className="instagram-home">
-// //       {/* Top Bar */}
-// //       <div className="top-bar">
-// //         <input type="text" placeholder="Search" className="search-bar" />
-// //         <div className="top-icons">
-// //           <span className="top-icon">&#x2665;</span>
-// //           <span className="top-icon">&#128276;</span>
-// //         </div>
-// //       </div>
-
-// //       {/* Stories */}
-// //       <div className="stories">
-// //         <div className="story">
-// //           <img
-// //             src={profile?.account?.avatar?.url || 'https://via.placeholder.com/40x40.png'}
-// //             alt={"Story"}
-// //             className="story-image"
-// //           />
-// //         </div>
-// //       </div>
-
-// //       {/* Post */}
-// //       <div className="post">
-// //         <div className="post-header">
-// //           <img
-// //             src="https://via.placeholder.com/40x40.png"
-// //             alt="Profile"
-// //             className="profile-picture"
-// //           />
-// //           <div className="profile-name">googleindia</div>
-// //         </div>
-// //         <div className="post-body">
-// //           <img
-// //             src="https://via.placeholder.com/800x450.png"
-// //             alt="Post"
-// //             className="post-image"
-// //           />
-// //         </div>
-// //         <div className="post-footer">
-// //           <div className="post-actions">
-// //             <span className="post-action">&#x2665;</span>
-// //             <span className="post-action">&#128172;</span>
-// //             <span className="post-action">&#9993;</span>
-// //           </div>
-// //           <div className="post-caption">
-// //             <strong>googleindia</strong> Picking a career <span>&#128293;</span>
-// //           </div>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default Home;
-
 // import "./home.scss";
-// import { useProfile } from "./hooks/useProfile";
+// import { useGetAllPostsQuery } from "../../../store/postApiSlice";
 // import TopBar from "./components/TopBar";
 // import Stories from "./components/Stories";
 // import Post from "./components/Post";
 // import Footer from "./components/Footer";
+// import { useProfile } from "./hooks/useProfile";
 
 // const Home = () => {
-//   const { profile, isLoading, error } = useProfile();
-//   console.log(profile?.account?.avatar?.url, "AVATAR");
+//   const { data: allPost, isLoading, error } = useGetAllPostsQuery();
+  
+//   const {isLoading: isProfileLoading, isError: profileError} = useProfile();
 
-//   if (isLoading) return <h4>Loading...</h4>;
-//   if (error) return <p>Error fetching profile: {error.message}</p>;
+//   if (isLoading ||  isProfileLoading) return <h4>Loading...</h4>;
+
+//   if (error || profileError) return <p>Error fetching posts</p>;
+
+//   const posts = allPost?.data?.posts || [];
+
+//   //console.log(posts[0].author?.account?.avatar?.url);
 
 //   return (
 //     <div className="instagram-home">
-//       {/* Top Bar */}
 //       <TopBar />
 
-//       {/* Stories */}
-//       <Stories avatarUrl={profile?.account?.avatar?.url} />
+//       {posts.length > 0 && (
+//         <Stories />
+//       )}
 
-//       {/* Post */}
-//       <Post
-//         profilePicture={profile?.account?.avatar?.url}
-//         profileName="googleindia"
-//         postImage="https://via.placeholder.com/800x450.png"
-//         caption="Picking a career"
-//       />
+//       <div className="post-section">
+//         {posts.map((post) => (
+//           <Post
+//             key={post._id}
+//             profilePicture={post.author?.coverImage?.url}
+//             profileName={`${post.author?.firstName} ${post.author?.lastName}`}
+//             postImage={
+//               post.images?.[0]?.url || "https://via.placeholder.com/800x450.png"
+//             }
+//             caption={post.content}
+//             createdAt={post.createdAt}
+//             isLiked={post.isLiked}
+//             isBookmarked={post.isBookmarked}
+//             likes={post.likes}
+//           />
+//         ))}
+//       </div>
 
-//       {/* Footer */}
-//       <Footer profilePicture={profile?.account?.avatar?.url} />
+//       <Footer />
 //     </div>
 //   );
 // };
 
 // export default Home;
 
+
+
+// import "./home.scss";
+// import { useState, useEffect, useCallback } from "react";
+// import { useGetAllPostsQuery } from "../../../store/postApiSlice";
+// import TopBar from "./components/TopBar";
+// import Stories from "./components/Stories";
+// import Post from "./components/Post";
+// import Footer from "./components/Footer";
+// import { useProfile } from "./hooks/useProfile";
+
+// const Home = () => {
+//   const [page, setPage] = useState(1);
+//   const [allPosts, setAllPosts] = useState([]);
+//   const { data, isLoading, error } = useGetAllPostsQuery({ page, limit: 10 });
+  
+//   const { isLoading: isProfileLoading, isError: profileError } = useProfile();
+
+//   useEffect(() => {
+//     if (data?.data?.posts) {
+//       setAllPosts((prevPosts) => [...prevPosts, ...data.data.posts]);
+//     }
+//   }, [data]);
+
+//   const loadMorePosts = useCallback(() => {
+//     setPage((prevPage) => prevPage + 1);
+//   }, []);
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+//         loadMorePosts();
+//       }
+//     };
+
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, [loadMorePosts]);
+
+//   if (isLoading || isProfileLoading) return <h4>Loading...</h4>;
+
+//   if (error || profileError) return <p>Error fetching posts</p>;
+
+//   return (
+//     <div className="instagram-home">
+//       <TopBar />
+
+//       {allPosts.length > 0 && <Stories />}
+
+//       <div className="post-section">
+//         {allPosts.map((post, index) => (
+//           <Post
+//             key={index}
+//             profilePicture={post.author?.coverImage?.url}
+//             profileName={`${post.author?.firstName} ${post.author?.lastName}`}
+//             postImage={
+//               post.images?.[0]?.url || "https://via.placeholder.com/800x450.png"
+//             }
+//             caption={post.content}
+//             createdAt={post.createdAt}
+//             isLiked={post.isLiked}
+//             isBookmarked={post.isBookmarked}
+//             likes={post.likes}
+//           />
+//         ))}
+//       </div>
+
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default Home;
+
+
+
+
+
+
 import "./home.scss";
-import { useGetAllPostsQuery } from "../../../store/postApiSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TopBar from "./components/TopBar";
 import Stories from "./components/Stories";
 import Post from "./components/Post";
 import Footer from "./components/Footer";
+import { fetchPosts } from "../../../store/allPostsSlice";
 import { useProfile } from "./hooks/useProfile";
 
 const Home = () => {
-  const { data: allPost, isLoading, error } = useGetAllPostsQuery();
-  
-  const {isLoading: isProfileLoading, isError: profileError} = useProfile();
+  const dispatch = useDispatch();
+  const { posts, page, isLoading, error } = useSelector((state) => state.allPosts);
+  const { isLoading: isProfileLoading, isError: profileError } = useProfile();
 
-  if (isLoading ||  isProfileLoading) return <h4>Loading...</h4>;
+  useEffect(() => {
+    if (posts.length === 0) {
+      dispatch(fetchPosts({ page: 1, limit: 10 }));
+    }
+  }, [dispatch, posts.length]);
+
+  const loadMorePosts = () => {
+    dispatch(fetchPosts({ page, limit: 10 }));
+  };
+
+  const handleScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoading) {
+      loadMorePosts();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  if (isLoading || isProfileLoading) return <h4>Loading...</h4>;
 
   if (error || profileError) return <p>Error fetching posts</p>;
-
-  const posts = allPost?.data?.posts || [];
-
-  console.log(posts[0].author?.account?.avatar?.url);
 
   return (
     <div className="instagram-home">
       <TopBar />
 
-      {posts.length > 0 && (
-        <Stories />
-      )}
+      {posts.length > 0 && <Stories />}
 
       <div className="post-section">
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <Post
-            key={post._id}
+            key={index}
             profilePicture={post.author?.coverImage?.url}
             profileName={`${post.author?.firstName} ${post.author?.lastName}`}
             postImage={

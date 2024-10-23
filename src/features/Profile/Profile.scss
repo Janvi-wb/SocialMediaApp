@@ -235,11 +235,13 @@ img {
     flex-wrap: wrap;
     margin: -1rem -1rem;
     padding-bottom: 3rem;
+    justify-content: flex-start; //
 }
 
 .gallery-item {
     position: relative;
     flex: 1 0 30%; /* Each item takes 30% width to create 3 columns */
+    max-width: 30%; //
     margin: 1rem;
     color: #fff;
     cursor: pointer;
@@ -255,10 +257,13 @@ img {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
+    opacity: 1;
 }
 
 .gallery-item-info {
     display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .gallery-item-info li {
@@ -281,15 +286,34 @@ img {
 
 .gallery-image {
     width: 100%;
-    height: 100%;
+    //height: 100%;
+    height: auto;
     object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+/* Ensure even distribution when there are fewer items */
+.gallery-item:nth-child(1n + 1):nth-last-child(-n + 3) {
+    flex: 1 0 30%;
 }
 
 /* Mobile Media Query */
 @media (max-width: 30rem) {
+    // .gallery-item {
+    //     flex: 1 0 30%; /* Maintain 3 columns on smaller screens */
+    //     margin: 0.5rem; /* Adjust margin for smaller screens */
+    // }
     .gallery-item {
-        flex: 1 0 30%; /* Maintain 3 columns on smaller screens */
-        margin: 0.5rem; /* Adjust margin for smaller screens */
+        flex: 1 0 30%; /* Adjust for smaller screens */
+        max-width: 30%;
+        margin: 0.3rem;
+    }
+}
+
+/* Make sure items align even when fewer than 3 */
+@media (min-width: 30rem) and (max-width: 60rem) {
+    .gallery {
+        justify-content: space-around;
     }
 }
 

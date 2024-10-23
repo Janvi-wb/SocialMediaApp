@@ -20,7 +20,7 @@ const Loginn = () => {
     const password = passwordRef.current.value;
     const email = !isRegistered ? emailRef.current.value : null;
 
-    console.log("Form submitted, isRegistered:", isRegistered);
+    //console.log("Form submitted, isRegistered:", isRegistered);
 
     const formData = {
       username,
@@ -28,7 +28,7 @@ const Loginn = () => {
       ...(email && { email }), // Add email only if in sign-up mode
     };
 
-    console.log(formData, "DATA");
+    //console.log(formData, "DATA");
 
     isRegistered
       ? await userLogin(formData)

@@ -5,25 +5,27 @@ import { setPosts, setStatus, setError } from "./../../../../store/postSlice"
 
 export const useMyPost = () => {
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useGetMyPostsQuery();
-  console.log(data);
+  const { data: postData, error, isLoading } = useGetMyPostsQuery();
+  //console.log(postData, "DATA");
 
   useEffect(() => {
     if (isLoading) {
       dispatch(setStatus('loading'));
-    } else if (data && data.posts) {
-      dispatch(setPosts(data?.posts));
+    } else if (postData) { 
+      dispatch(setPosts(postData?.data.posts));
+      //console.log(postData?.data.posts, "IN HOOK");
       dispatch(setStatus('succeeded'));
     } else if (error) {
       dispatch(setError(error.message));
       dispatch(setStatus('failed'));
     }
-  }, [data, isLoading, error, dispatch]);
+  }, [postData, isLoading, error, dispatch]);
   
-  const posts = useSelector((state) => state.posts.posts || []);
-  console.log(posts);
-  const status = useSelector((state) => state.posts.status);
-  const errorMessage = useSelector((state) => state.posts.error);
+  // data is not stored in  
+  const posts = useSelector((state) => state?.myPosts?.posts);
+  //console.log(posts);
+  const status = useSelector((state) => state?.myPosts?.status);
+  const errorMessage = useSelector((state) => state?.myPosts?.error);
 
 
   return { posts, status, errorMessage };
