@@ -11,138 +11,151 @@ Flexbox and floats are used as a fallback so that browsers which don't support g
 /* Base Styles */
 
 :root {
-    //font-size: 10px;
+  //font-size: 10px;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: "Open Sans", Arial, sans-serif;
-    min-height: 100vh;
-    background-color: #fafafa;
-    color: #262626;
-    padding-bottom: 3rem;
+  font-family: "Open Sans", Arial, sans-serif;
+  min-height: 100vh;
+  background-color: #fafafa;
+  color: #262626;
+  padding-bottom: 3rem;
+  overflow: hidden;
 }
 
 img {
-    display: block;
+  display: block;
 }
 
 .container {
-    max-width: 93.5rem;
-    margin: 0 auto;
-    padding: 0 2rem;
+  //max-width: 93.5rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  //height: 80vh; 
+  overflow-y: hidden; 
+  overflow-x: hidden; 
+}
+
+.container-postGrid {
+  margin: 0 auto;
+  padding: 0 1rem;
+  //height: 80vh; 
+    overflow-y: auto; 
+  overflow-x: hidden; 
 }
 
 .btn {
-    display: inline-block;
-    font: inherit;
-    background: none;
-    border: none;
-    color: inherit;
-    padding: 0;
-    cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
 }
 
 .btn:focus {
-    outline: 0.5rem auto #4d90fe;
+  outline: 0.5rem auto #4d90fe;
 }
 
 .visually-hidden {
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
 }
 
 /* Profile Section */
 
 .profile {
-    padding: 5rem 0;
+  padding: 5rem 0;
+  margin: -40px 0;
 }
 
 .profile::after {
-    content: "";
-    display: block;
-    clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .profile-image {
-    float: left;
-    width: calc(33.333% - 1rem);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 3rem;
+  float: left;
+  width: calc(33.333% - 1rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3rem;
 }
 
 .profile-image img {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .profile-user-settings,
 .profile-stats,
 .profile-bio {
-    float: left;
-    width: calc(66.666% - 2rem);
+  float: left;
+  width: calc(66.666% - 2rem);
 }
 
 .profile-user-settings {
-    margin-top: 1.1rem;
+  margin-top: 1.1rem;
 }
 
 .profile-user-name {
-    display: inline-block;
-    font-size: 3.2rem;
-    font-weight: 300;
+  display: inline-block;
+  font-size: 3.2rem;
+  font-weight: 300;
 }
 
 .profile-edit-btn {
-    font-size: 1.4rem;
-    line-height: 1.8;
-    border: 0.1rem solid #dbdbdb;
-    border-radius: 0.3rem;
-    padding: 0 2.4rem;
-    margin-left: 2rem;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  border: 0.1rem solid #dbdbdb;
+  border-radius: 0.3rem;
+  padding: 0 2.4rem;
+  margin-left: 2rem;
 }
 
 .profile-settings-btn {
-    font-size: 2rem;
-    margin-left: 1rem;
+  font-size: 2rem;
+  margin-left: 1rem;
 }
 
 .profile-stats {
-    margin-top: 2.3rem;
+  margin-top: 2.3rem;
 }
 
 .profile-stats li {
-    display: inline-block;
-    font-size: 1.6rem;
-    line-height: 1.5;
-    margin-right: 4rem;
-    cursor: pointer;
+  display: inline-block;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin-right: 4rem;
+  cursor: pointer;
 }
 
 .profile-stats li:last-of-type {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .profile-bio {
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 1.5;
-    margin-top: 2.3rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 2.3rem;
 }
 
 .profile-real-name,
 .profile-stat-count,
 .profile-edit-btn {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 /* Gallery Section */
@@ -231,194 +244,201 @@ img {
 
 /* Gallery Section */
 .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -1rem -1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ensure 3 equal columns */
+    gap: 0.2rem; /* Adjust the spacing between items */
     padding-bottom: 3rem;
-    justify-content: flex-start; //
-}
-
-.gallery-item {
+    justify-content: start; /* Align the grid items at the start */
+  }
+  
+  .gallery-item {
     position: relative;
-    flex: 1 0 30%; /* Each item takes 30% width to create 3 columns */
-    max-width: 30%; //
-    margin: 1rem;
+    width: 100%; /* Ensure items take full width of grid cell */
     color: #fff;
     cursor: pointer;
-}
+    overflow: hidden; /* Hide overflow */
+    border-radius: 2px; /* Optional, for rounded corners */
+  }
+  
+  .gallery-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 1/1; /* Ensure images are square */
+  }
 
 .gallery-item:hover .gallery-item-info,
 .gallery-item:focus .gallery-item-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 1;
 }
 
 .gallery-item-info {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .gallery-item-info li {
-    display: inline-block;
-    font-size: 1.7rem;
-    font-weight: 600;
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 
 .gallery-item-likes {
-    margin-right: 2.2rem;
+  margin-right: 2.2rem;
 }
 
 .gallery-item-type {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 2.5rem;
-    text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2.5rem;
+  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
 }
 
-.gallery-image {
-    width: 100%;
-    //height: 100%;
-    height: auto;
-    object-fit: cover;
-    aspect-ratio: 1/1;
-}
+// .gallery-image {
+//   width: 100%;
+//   //height: 100%;
+//   height: auto;
+//   object-fit: cover;
+//   aspect-ratio: 1/1;
+// }
 
 /* Ensure even distribution when there are fewer items */
 .gallery-item:nth-child(1n + 1):nth-last-child(-n + 3) {
-    flex: 1 0 30%;
+  flex: 1 0 30%;
 }
 
 /* Mobile Media Query */
 @media (max-width: 30rem) {
-    // .gallery-item {
-    //     flex: 1 0 30%; /* Maintain 3 columns on smaller screens */
-    //     margin: 0.5rem; /* Adjust margin for smaller screens */
-    // }
-    .gallery-item {
-        flex: 1 0 30%; /* Adjust for smaller screens */
-        max-width: 30%;
-        margin: 0.3rem;
-    }
+
+  .gallery-item {
+    flex: 1 0 30%; /* Adjust for smaller screens */
+    max-width: 100%;
+    //margin: 0.3rem;
+  }
 }
 
 /* Make sure items align even when fewer than 3 */
 @media (min-width: 30rem) and (max-width: 60rem) {
-    .gallery {
-        justify-content: space-around;
-    }
+  .gallery {
+    justify-content: space-around;
+  }
 }
-
 
 /* Loader */
 
 .loader {
-    width: 5rem;
-    height: 5rem;
-    border: 0.6rem solid #999;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    margin: 0 auto;
-    animation: loader 500ms linear infinite;
+  width: 5rem;
+  height: 5rem;
+  border: 0.6rem solid #999;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: loader 500ms linear infinite;
 }
 
 /* Media Query */
 
 @media screen and (max-width: 30rem) {
-    .profile {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 4rem 0;
-    }
+  .profile {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4rem 0;
+  }
 
-    .profile::after {
-        display: none;
-    }
+  .profile::after {
+    display: none;
+  }
 
-    .profile-image,
-    .profile-user-settings,
-    .profile-bio,
-    .profile-stats {
-        float: none;
-        width: auto;
-    }
+  .profile-image,
+  .profile-user-settings,
+  .profile-bio,
+  .profile-stats {
+    float: none;
+    width: auto;
+  }
 
-    .profile-image img {
-        width: 7.7rem;
-    }
+  .profile-image img {
+    width: 5.5rem;
+  }
 
-    // .profile-user-settings {
-    //     flex-basis: calc(100% - 10.7rem);
-    //     display: flex;
-    //     flex-wrap: wrap;
-    //     margin-top: 1rem;
-    // }
+  .profile-user-settings {
+    flex-basis: calc(100% - 10.7rem);
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
 
-    .profile-user-name {
-        font-size: 2.2rem;
-    }
+  .profile-settings-btn {
+    font-size: 1rem;
+  }
 
-    // .profile-edit-btn {
-    //     order: 1;
-    //     padding: 0;
-    //     text-align: center;
-    //     margin-top: 1rem;
-    // }
+  .profile-user-name {
+    font-size: 1.5rem;
+  }
 
-    // .profile-edit-btn {
-    //     margin-left: 0;
-    // }
+  .profile-edit-btn {
+    order: 1;
+    padding: 0;
+    text-align: center;
+    margin-top: 1rem;
+  }
 
-    .profile-bio {
-        font-size: 1.4rem;
-        margin-top: 1.5rem;
-    }
+  .profile-edit-btn {
+    margin-left: 0;
+    font-size: 0.8rem;
+  }
 
-    // .profile-edit-btn,
-    // .profile-bio,
-    // .profile-stats {
-    //     flex-basis: 100%;
-    // }
+  .profile-bio {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 
-    .profile-stats {
-        order: 0;
-        margin-top: 1.5rem;
-        margin-left: 10px;
-    }
+  .profile-edit-btn,
+  .profile-bio,
+  .profile-stats {
+    flex-basis: 100%;
+  }
 
-    // .profile-stats ul {
-    //     display: flex;
-    //     text-align: center;
-    //     padding: 1.2rem 0;
-    //     border-top: 0.1rem solid #dadada;
-    //     border-bottom: 0.1rem solid #dadada;
-    //}
+  .profile-stats {
+    order: 0;
+    margin-top: 1rem;
+  }
 
-    // .profile-stats li {
-    //     font-size: 1.4rem;
-    //     flex: 1;
-    //     margin: 0;
-    // }
+  .profile-stats ul {
+    display: flex;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
 
-    // .profile-stat-count {
-    //     display: block;
-    // }
-}
+  .profile-stats li {
+    font-size: 1rem;
+    flex: 1;
+    margin-right: 26px;
+  }
 
-/* Spinner Animation */
+  .profile-stat-count {
+    display: block;
+  }
 
-@keyframes loader {
-    to {
-        transform: rotate(360deg);
-    }
+  .gallery-item-info li {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .gallery-item-info ul {
+    margin-left: 34px;
+  }
 }
 
 /*
@@ -490,21 +510,44 @@ Remove or comment-out the code block below to see how the browser will fall-back
 //     }
 // }
 
-
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensure it takes full viewport height */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+.content {
+  flex: 1; /* This makes the content area grow to take up available space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+footer {
+  background-color: #f8f9fa; /* Example styling, can be customized */
+  padding: 1rem;
+  text-align: center;
+  /* You can add other footer-specific styling here */
+}
+
+
+// custom scrollbar styling
+.container::-webkit-scrollbar {
+    width: 8px;
   }
   
-  .content {
-    flex: 1; /* This makes the content area grow to take up available space */
+  .container::-webkit-scrollbar-track {
+    background: #f1f1f1;
   }
   
-  footer {
-    background-color: #f8f9fa; /* Example styling, can be customized */
-    padding: 1rem;
-    text-align: center;
-    /* You can add other footer-specific styling here */
+  .container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
   }
+  
+  .container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
   

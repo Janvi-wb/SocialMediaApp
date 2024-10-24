@@ -17,6 +17,10 @@ export const postApiSlice = createApi({
     getAllPosts: builder.query({
       query: () => `/posts?page=1&limit=20`,
     }),
+    getPostById: builder.query({
+        query: (postId) => `/posts/${postId}`,
+        //providesTags: (result, error, postId) => [{ type: "Post", id: postId }],
+    }),
     getMyPosts: builder.query({
       query: (userName) =>
         userName
@@ -40,6 +44,7 @@ export const postApiSlice = createApi({
 
 export const {
   useGetAllPostsQuery,
+  useGetPostByIdQuery,
   useGetMyPostsQuery,
   useLikePostMutation,
   useBookmarkPostMutation,

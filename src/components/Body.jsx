@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { addCredentials } from "../../store/userSlice";
 import Profile from "../features/Profile/Profile";
+import PostModal from "../features/Profile/components/PostModal";
 
 const Body = () => {
 
@@ -34,6 +35,10 @@ const Body = () => {
     {
       path: "/profile",
       element: <Profile />,
+    },
+    {
+      path: "/post/:id",
+      element: <PostModal />
     }
    ])
    
