@@ -6,21 +6,73 @@ import {
   truncateDescription,
 } from "../../../../utils/functions";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useBookmarkPostMutation, useLikePostMutation } from "../../../../store/postApiSlice";
+import { addAllPosts } from "../../../../store/allPostsSlice";
 
-const Post = ({
-  profilePicture,
-  profileName,
-  postImage,
-  caption,
-  createdAt,
-  isLiked,
-  isBookmarked,
-  likes,
-}) => {
+const Post = ({ post }) => {
+  const {
+    // eslint-disable-next-line react/prop-types
+    _id,
+    author,
+    images,
+    content,
+    createdAt,
+    isLiked,
+    isBookmarked,
+    likes,
+  } = post;
+
+  const [likePost] = useLikePostMutation();
+  const [bookmarkPost] = useBookmarkPostMutation();
+  const dispatch = useDispatch();
+
+  const profilePicture =
+    author?.coverImage?.url || "https://via.placeholder.com/40x40.png";
+  const profileName = `${author?.firstName} ${author?.lastName}`;
+  const postImage =
+    images?.[0]?.url || "https://via.placeholder.com/800x450.png";
   const [isExpanded, setIsExpanded] = useState(false);
   const [comment, setComment] = useState("");
 
-  // Toggle between full description and truncated description
+   // Access allPosts from Redux store
+   const allPosts = useSelector((state) => state.allPosts.allPosts);
+
+   const handleLike = async () => {
+    console.log("LIKED/UNLIKED");
+     try {
+       const response = await likePost(_id).unwrap();
+       console.log(response, "RESPONSE");
+       const updatedPosts = updatePostInStore(_id, {
+         isLiked: response.data.isLiked,
+         likes: response.data.isLiked ? likes + 1 : likes - 1,
+       }, allPosts);
+       console.log(updatedPosts, "UPDATED DATA");
+       dispatch(addAllPosts(updatedPosts));
+     } catch (error) {
+       console.error("Error liking post: ", error);
+     }
+   };
+ 
+   const handleBookmark = async () => {
+     try {
+       const response = await bookmarkPost(_id).unwrap();
+       const updatedPosts = updatePostInStore(_id, {
+         isBookmarked: response.data.isBookmarked,
+       }, allPosts);
+       dispatch(addAllPosts(updatedPosts));
+     } catch (error) {
+       console.error("Error bookmarking post: ", error);
+     }
+   };
+ 
+   const updatePostInStore = (postId, updatedData, posts) => {
+     return posts.map((post) =>
+       // eslint-disable-next-line react/prop-types
+       post._id === postId ? { ...post, ...updatedData } : post
+     );
+   };
+
   const toggleDescription = () => {
     setIsExpanded(!isExpanded);
   };
@@ -29,45 +81,36 @@ const Post = ({
     setComment(e.target.value);
   };
 
-  // Determine which description to show
   const descriptionText = isExpanded
-    ? caption
-    : truncateDescription(caption, 10);
+    ? content
+    : truncateDescription(content, 10);
 
   return (
     <div className="post-area">
-      {/*  */}
       <div className="post-main">
         <div className="post-header">
           <div className="post-left-header">
             <div className="post-image">
-              <img
-                src={profilePicture || "https://via.placeholder.com/40x40.png"}
-                alt=""
-              />
+              <img src={profilePicture} alt="" />
             </div>
             <p className="post-username">{profileName}</p>
-            <span className="one-day">
-              {" "}
-              . {getTimeDifference(createdAt)}{" "}
-            </span>{" "}
+            <span className="one-day">. {getTimeDifference(createdAt)}</span>
           </div>
           <img
             className="dots"
             src="https://clipground.com/images/three-dots-png-1.png"
+            alt="menu"
           />
         </div>
         <div className="post-main-image">
-          <img
-            src={postImage || "https://via.placeholder.com/800x450.png"}
-            alt=""
-          />
+          <img src={postImage} alt="" />
         </div>
         <div className="post-fotter">
           <div className="post-fotter-left">
             <i
               className={`fa-${isLiked ? "solid" : "regular"} fa-heart`}
               style={{ color: isLiked ? "red" : "black" }}
+              onClick={handleLike}
             ></i>
             <i className="fa-regular fa-message"></i>
             <i className="fa-regular fa-paper-plane"></i>
@@ -75,8 +118,8 @@ const Post = ({
           <i
             className={`fa-${isBookmarked ? "solid" : "regular"} fa-bookmark`}
             style={{ color: isBookmarked ? "black" : "grey" }}
+            onClick={handleBookmark}
           ></i>
-          {/* <i className="fa-solid fa-bookmark" /> */}
         </div>
         <div className="post-description">
           <p className="post-liked">
@@ -84,7 +127,7 @@ const Post = ({
           </p>
           <p className="title">
             <strong>{profileName}</strong> {descriptionText}
-            {caption.split(" ").length > 10 && !isExpanded && (
+            {content.split(" ").length > 10 && !isExpanded && (
               <span className="read-more" onClick={toggleDescription}>
                 {" "}
                 read more
@@ -113,14 +156,15 @@ const Post = ({
 };
 
 Post.propTypes = {
-  profilePicture: PropTypes.string,
-  profileName: PropTypes.string,
-  postImage: PropTypes.string,
-  caption: PropTypes.string,
-  createdAt: PropTypes.string,
-  isLiked: PropTypes.bool,
-  isBookmarked: PropTypes.bool,
-  likes: PropTypes.number,
+  post: PropTypes.shape({
+    author: PropTypes.object,
+    images: PropTypes.array,
+    content: PropTypes.string,
+    createdAt: PropTypes.string,
+    isLiked: PropTypes.bool,
+    isBookmarked: PropTypes.bool,
+    likes: PropTypes.number,
+  }).isRequired,
 };
 
 export default Post;

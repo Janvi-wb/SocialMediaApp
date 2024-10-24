@@ -4,7 +4,7 @@ import { DEFAULT_PHOTO_URL } from "../../../../utils/constants";
 
 const Header = () => {
     const profile = useSelector(store => store.profile.profile);
-    console.log(profile);
+    //console.log(profile);
   
     return (
     <>

@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 const PostGrid = () => {
   const posts = useSelector((store) => store.myPosts.posts);
-  console.log(posts, "POST DATA FROM STORE");
-  console.log(posts[0]);
+  //console.log(posts, "POST DATA FROM STORE");
+  //console.log(posts[0]);
 
   return (
     <>

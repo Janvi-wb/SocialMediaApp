@@ -1,56 +1,51 @@
-// import "./home.scss";
-// import { useGetAllPostsQuery } from "../../../store/postApiSlice";
-// import TopBar from "./components/TopBar";
-// import Stories from "./components/Stories";
-// import Post from "./components/Post";
-// import Footer from "./components/Footer";
-// import { useProfile } from "./hooks/useProfile";
+import "./home.scss";
+import { useGetAllPostsQuery } from "../../../store/postApiSlice";
+import TopBar from "./components/TopBar";
+import Stories from "./components/Stories";
+import Post from "./components/Post";
+import Footer from "./components/Footer";
+import { useProfile } from "./hooks/useProfile";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAllPosts } from "../../../store/allPostsSlice";
 
-// const Home = () => {
-//   const { data: allPost, isLoading, error } = useGetAllPostsQuery();
+const Home = () => {
+
+  const dispatch = useDispatch();
+
+  const { data: allPost, isLoading, error } = useGetAllPostsQuery();
+  const {isLoading: isProfileLoading, isError: profileError} = useProfile();
+
+  useEffect(() => {
+    dispatch(addAllPosts(allPost?.data?.posts));
+  }, []);
+
+  // const posts = allPost?.data?.posts || [];
+  const posts = useSelector(store => store.allPosts.allPosts);
   
-//   const {isLoading: isProfileLoading, isError: profileError} = useProfile();
+  if (isLoading ||  isProfileLoading) return <h4>Loading...</h4>;
+  if (error || profileError) return <p>Error fetching posts</p>;
 
-//   if (isLoading ||  isProfileLoading) return <h4>Loading...</h4>;
+  return (
+    <div className="instagram-home">
+      <TopBar />
 
-//   if (error || profileError) return <p>Error fetching posts</p>;
+      {posts?.length > 0 && (
+        <Stories />
+      )}
 
-//   const posts = allPost?.data?.posts || [];
+      <div className="post-section">
+        {posts?.map((post) => (
+          <Post key={post._id} post={post} />
+        ))}
+      </div>
 
-//   //console.log(posts[0].author?.account?.avatar?.url);
+      <Footer />
+    </div>
+  );
+};
 
-//   return (
-//     <div className="instagram-home">
-//       <TopBar />
-
-//       {posts.length > 0 && (
-//         <Stories />
-//       )}
-
-//       <div className="post-section">
-//         {posts.map((post) => (
-//           <Post
-//             key={post._id}
-//             profilePicture={post.author?.coverImage?.url}
-//             profileName={`${post.author?.firstName} ${post.author?.lastName}`}
-//             postImage={
-//               post.images?.[0]?.url || "https://via.placeholder.com/800x450.png"
-//             }
-//             caption={post.content}
-//             createdAt={post.createdAt}
-//             isLiked={post.isLiked}
-//             isBookmarked={post.isBookmarked}
-//             likes={post.likes}
-//           />
-//         ))}
-//       </div>
-
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default Home;
+export default Home;
 
 
 
@@ -104,7 +99,7 @@
 //       <div className="post-section">
 //         {allPosts.map((post, index) => (
 //           <Post
-//             key={index}
+//             key={index + Math.random()}
 //             profilePicture={post.author?.coverImage?.url}
 //             profileName={`${post.author?.firstName} ${post.author?.lastName}`}
 //             postImage={
@@ -131,73 +126,73 @@
 
 
 
-import "./home.scss";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import TopBar from "./components/TopBar";
-import Stories from "./components/Stories";
-import Post from "./components/Post";
-import Footer from "./components/Footer";
-import { fetchPosts } from "../../../store/allPostsSlice";
-import { useProfile } from "./hooks/useProfile";
+// import "./home.scss";
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import TopBar from "./components/TopBar";
+// import Stories from "./components/Stories";
+// import Post from "./components/Post";
+// import Footer from "./components/Footer";
+// import { fetchPosts } from "../../../store/allPostsSlice";
+// import { useProfile } from "./hooks/useProfile";
 
-const Home = () => {
-  const dispatch = useDispatch();
-  const { posts, page, isLoading, error } = useSelector((state) => state.allPosts);
-  const { isLoading: isProfileLoading, isError: profileError } = useProfile();
+// const Home = () => {
+//   const dispatch = useDispatch();
+//   const { posts, page, isLoading, error } = useSelector((state) => state.allPosts);
+//   const { isLoading: isProfileLoading, isError: profileError } = useProfile();
 
-  useEffect(() => {
-    if (posts.length === 0) {
-      dispatch(fetchPosts({ page: 1, limit: 10 }));
-    }
-  }, [dispatch, posts.length]);
+//   useEffect(() => {
+//     if (posts.length === 0) {
+//       dispatch(fetchPosts({ page: 1, limit: 10 }));
+//     }
+//   }, [dispatch, posts.length]);
 
-  const loadMorePosts = () => {
-    dispatch(fetchPosts({ page, limit: 10 }));
-  };
+//   const loadMorePosts = () => {
+//     dispatch(fetchPosts({ page, limit: 10 }));
+//   };
 
-  const handleScroll = () => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoading) {
-      loadMorePosts();
-    }
-  };
+//   const handleScroll = () => {
+//     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !isLoading) {
+//       loadMorePosts();
+//     }
+//   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+//   useEffect(() => {
+//     window.addEventListener("scroll", handleScroll);
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, [handleScroll]);
 
-  if (isLoading || isProfileLoading) return <h4>Loading...</h4>;
+//   if (isLoading || isProfileLoading) return <h4>Loading...</h4>;
 
-  if (error || profileError) return <p>Error fetching posts</p>;
+//   if (error || profileError) return <p>Error fetching posts</p>;
 
-  return (
-    <div className="instagram-home">
-      <TopBar />
+//   return (
+//     <div className="instagram-home">
+//       <TopBar />
 
-      {posts.length > 0 && <Stories />}
+//       {posts.length > 0 && <Stories />}
 
-      <div className="post-section">
-        {posts.map((post, index) => (
-          <Post
-            key={index}
-            profilePicture={post.author?.coverImage?.url}
-            profileName={`${post.author?.firstName} ${post.author?.lastName}`}
-            postImage={
-              post.images?.[0]?.url || "https://via.placeholder.com/800x450.png"
-            }
-            caption={post.content}
-            createdAt={post.createdAt}
-            isLiked={post.isLiked}
-            isBookmarked={post.isBookmarked}
-            likes={post.likes}
-          />
-        ))}
-      </div>
+//       <div className="post-section">
+//         {posts.map((post, index) => (
+//           <Post
+//             key={index}
+//             profilePicture={post.author?.coverImage?.url}
+//             profileName={`${post.author?.firstName} ${post.author?.lastName}`}
+//             postImage={
+//               post.images?.[0]?.url || "https://via.placeholder.com/800x450.png"
+//             }
+//             caption={post.content}
+//             createdAt={post.createdAt}
+//             isLiked={post.isLiked}
+//             isBookmarked={post.isBookmarked}
+//             likes={post.likes}
+//           />
+//         ))}
+//       </div>
 
-      <Footer />
-    </div>
-  );
-};
+//       <Footer />
+//     </div>
+//   );
+// };
 
-export default Home;
+// export default Home;
