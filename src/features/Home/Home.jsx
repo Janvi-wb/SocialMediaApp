@@ -6,8 +6,9 @@ import Post from "./components/Post";
 import Footer from "./components/Footer";
 import { useProfile } from "./hooks/useProfile";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addAllPosts } from "../../../store/allPostsSlice";
+import PostShimmer from "./components/PostShimmer";
 
 const Home = () => {
 
@@ -20,10 +21,10 @@ const Home = () => {
     dispatch(addAllPosts(allPost?.data?.posts));
   }, []);
 
-  // const posts = allPost?.data?.posts || [];
-  const posts = useSelector(store => store.allPosts.allPosts);
+  const posts = allPost?.data?.posts || [];
+  //const posts = useSelector(store => store.allPosts.allPosts);
   
-  if (isLoading ||  isProfileLoading) return <h4>Loading...</h4>;
+  if (isLoading ||  isProfileLoading) return <h4><PostShimmer /></h4>;
   if (error || profileError) return <p>Error fetching posts</p>;
 
   return (

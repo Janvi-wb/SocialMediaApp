@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import { addCredentials } from "../../store/userSlice";
 import Profile from "../features/Profile/Profile";
 import PostModal from "../features/Profile/components/PostModal";
+import FollowerModal from "../features/Profile/components/FollowerModal";
+import FollowingModal from "../features/Profile/components/FollowingModal";
+import Comment from "../features/Comment/Comment";
 
 const Body = () => {
 
@@ -39,6 +42,18 @@ const Body = () => {
     {
       path: "/post/:id",
       element: <PostModal />
+    },
+    {
+      path: "/followers/:username",
+      element: <FollowerModal />
+    },
+    {
+      path: "/following/:username",
+      element: <FollowingModal />
+    },
+    {
+      path: "comments/:id",
+      element: <Comment />
     }
    ])
    

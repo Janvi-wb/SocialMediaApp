@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./Post.scss";
 import "../../Home/home.scss";
 import PropTypes from "prop-types";
@@ -7,12 +8,15 @@ import {
 } from "../../../../utils/functions";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useBookmarkPostMutation, useLikePostMutation } from "../../../../store/postApiSlice";
+import {
+  useBookmarkPostMutation,
+  useLikePostMutation,
+} from "../../../../store/postApiSlice";
 import { addAllPosts } from "../../../../store/allPostsSlice";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   const {
-    // eslint-disable-next-line react/prop-types
     _id,
     author,
     images,
@@ -35,43 +39,50 @@ const Post = ({ post }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [comment, setComment] = useState("");
 
-   // Access allPosts from Redux store
-   const allPosts = useSelector((state) => state.allPosts.allPosts);
+  // Access allPosts from Redux store
+  const allPosts = useSelector((state) => state.allPosts.allPosts);
 
-   const handleLike = async () => {
+  const handleLike = async () => {
     console.log("LIKED/UNLIKED");
-     try {
-       const response = await likePost(_id).unwrap();
-       console.log(response, "RESPONSE");
-       const updatedPosts = updatePostInStore(_id, {
-         isLiked: response.data.isLiked,
-         likes: response.data.isLiked ? likes + 1 : likes - 1,
-       }, allPosts);
-       console.log(updatedPosts, "UPDATED DATA");
-       dispatch(addAllPosts(updatedPosts));
-     } catch (error) {
-       console.error("Error liking post: ", error);
-     }
-   };
- 
-   const handleBookmark = async () => {
-     try {
-       const response = await bookmarkPost(_id).unwrap();
-       const updatedPosts = updatePostInStore(_id, {
-         isBookmarked: response.data.isBookmarked,
-       }, allPosts);
-       dispatch(addAllPosts(updatedPosts));
-     } catch (error) {
-       console.error("Error bookmarking post: ", error);
-     }
-   };
- 
-   const updatePostInStore = (postId, updatedData, posts) => {
-     return posts.map((post) =>
-       // eslint-disable-next-line react/prop-types
-       post._id === postId ? { ...post, ...updatedData } : post
-     );
-   };
+    try {
+      const response = await likePost(_id).unwrap();
+      console.log(response, "RESPONSE");
+      const updatedPosts = updatePostInStore(
+        _id,
+        {
+          isLiked: response.data.isLiked,
+          likes: response.data.isLiked ? likes + 1 : likes - 1,
+        },
+        allPosts
+      );
+      console.log(updatedPosts, "UPDATED DATA");
+      dispatch(addAllPosts(updatedPosts));
+    } catch (error) {
+      console.error("Error liking post: ", error);
+    }
+  };
+
+  const handleBookmark = async () => {
+    try {
+      const response = await bookmarkPost(_id).unwrap();
+      const updatedPosts = updatePostInStore(
+        _id,
+        {
+          isBookmarked: response.data.isBookmarked,
+        },
+        allPosts
+      );
+      dispatch(addAllPosts(updatedPosts));
+    } catch (error) {
+      console.error("Error bookmarking post: ", error);
+    }
+  };
+
+  const updatePostInStore = (postId, updatedData, posts) => {
+    return posts.map((post) =>
+      post._id === postId ? { ...post, ...updatedData } : post
+    );
+  };
 
   const toggleDescription = () => {
     setIsExpanded(!isExpanded);
@@ -112,7 +123,9 @@ const Post = ({ post }) => {
               style={{ color: isLiked ? "red" : "black" }}
               onClick={handleLike}
             ></i>
-            <i className="fa-regular fa-message"></i>
+            <Link to={`/comments/${post._id}`}>
+              <i className="fa-regular fa-message"></i>
+            </Link>
             <i className="fa-regular fa-paper-plane"></i>
           </div>
           <i

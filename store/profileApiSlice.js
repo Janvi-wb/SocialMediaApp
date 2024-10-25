@@ -5,18 +5,38 @@ export const profileApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/v1/social-media/",
     prepareHeaders: (headers) => {
-        const token = localStorage.getItem('accessToken'); 
-        if (token) {
-          headers.set('Authorization', `Bearer ${token}`); 
-        }
-        return headers;
-      },
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: () => '/profile',
+      query: () => "/profile",
+    }),
+
+    followUnfollowUser: builder.mutation({
+      query: ({ userId }) => ({
+        url: `/follow/${userId}`,
+        method: "POST",
+      }),
+    }),
+
+    followingUser: builder.query({
+      query: (userName) => `/follow/list/following/${userName}`,
+    }),
+
+    followersUser: builder.query({
+      query: (userName) => `/follow/list/followers/${userName}`,
     }),
   }),
 });
 
-export const { useGetProfileQuery } = profileApiSlice;
+export const {
+  useGetProfileQuery,
+  useFollowUnfollowUserMutation,
+  useFollowingUserQuery,
+  useFollowersUserQuery,
+} = profileApiSlice;

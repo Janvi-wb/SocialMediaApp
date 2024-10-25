@@ -1,19 +1,4 @@
-/*
-
-All grid code is placed in a 'supports' rule (feature query) at the bottom of the CSS (Line 310). 
-        
-The 'supports' rule will only run if your browser supports CSS grid.
-
-Flexbox and floats are used as a fallback so that browsers which don't support grid will still recieve a similar layout.
-
-*/
-
 /* Base Styles */
-
-:root {
-  //font-size: 10px;
-}
-
 *,
 *::before,
 *::after {
@@ -43,6 +28,7 @@ img {
 }
 
 .container-postGrid {
+  max-width: 42%;
   margin: 0 auto;
   padding: 0 1rem;
   //height: 80vh; 
@@ -75,8 +61,8 @@ img {
 /* Profile Section */
 
 .profile {
-  padding: 5rem 0;
-  margin: -40px 0;
+  padding: 3.6rem 0;
+  margin: -40px 0 -40px 20px;
 }
 
 .profile::after {
@@ -91,11 +77,12 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 3rem;
+  margin-right: 1.4rem;
 }
 
 .profile-image img {
   border-radius: 50%;
+  width: 140px;
 }
 
 .profile-user-settings,
@@ -111,33 +98,33 @@ img {
 
 .profile-user-name {
   display: inline-block;
-  font-size: 3.2rem;
+  font-size: 1.8rem;
   font-weight: 300;
 }
 
 .profile-edit-btn {
-  font-size: 1.4rem;
+  font-size: 0.8rem;
   line-height: 1.8;
   border: 0.1rem solid #dbdbdb;
   border-radius: 0.3rem;
-  padding: 0 2.4rem;
+  padding: 0 1.5rem;
   margin-left: 2rem;
 }
 
 .profile-settings-btn {
-  font-size: 2rem;
+  font-size: 1.2rem;
   margin-left: 1rem;
 }
 
 .profile-stats {
-  margin-top: 2.3rem;
+  margin-top: 2rem;
 }
 
 .profile-stats li {
   display: inline-block;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  margin-right: 4rem;
+  font-size: 1.2rem;
+  //line-height: 1.5;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
@@ -146,10 +133,10 @@ img {
 }
 
 .profile-bio {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.5;
-  margin-top: 2.3rem;
+  margin-top: 1.6rem;
 }
 
 .profile-real-name,
@@ -349,10 +336,18 @@ img {
 /* Media Query */
 
 @media screen and (max-width: 30rem) {
+  .container-postGrid {
+    max-width: 100%;
+  }
+
   .profile {
     display: flex;
     flex-wrap: wrap;
     padding: 4rem 0;
+  }
+  .profile {
+    padding: 3rem 0;
+    margin: -40px 0;
   }
 
   .profile::after {
@@ -383,7 +378,7 @@ img {
   }
 
   .profile-user-name {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   .profile-edit-btn {

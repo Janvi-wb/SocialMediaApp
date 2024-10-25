@@ -3,6 +3,7 @@ import TopBar from "../../Home/components/TopBar";
 import { useGetPostByIdQuery } from "../../../../store/postApiSlice";
 import Footer from "../../Home/components/Footer";
 import Post from "../../Home/components/Post";
+import "./PostModal.scss"
 
 const PostModal = () => {
   const location = useLocation();
@@ -39,3 +40,4 @@ const PostModal = () => {
 };
 
 export default PostModal;
+

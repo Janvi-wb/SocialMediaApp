@@ -1,0 +1,74 @@
+/* Main container overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensures it's on top */
+  }
+  
+  /* Modal content styling */
+  .modal-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 60%; /* Default width on desktop */
+    max-width: 800px; /* Max width on desktop */
+    height: 70%; /* Adjust as per design */
+    max-height: 90vh; /* Keeps modal within view on smaller screens */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  /* Close button positioning */
+  .close-button {
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  /* Ensures the modal doesn't scroll the whole page */
+  .post-details {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 20px;
+
+  }
+
+  .post-main-image {
+    width: 70%;
+    margin: 20px 0px 20px 100px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 90%; /* More narrow on smaller screens */
+      height: 90%; /* Full height on mobile */
+      max-width: none; /* Removes max-width restriction */
+      flex-direction: column; /* Stacks content vertically */
+    }
+  
+    .close-button {
+      font-size: 1.2rem; /* Smaller close button */
+    }
+
+    .post-main-image {
+        width: 100%;
+        margin: 20px 0px;
+      }
+  }
+  

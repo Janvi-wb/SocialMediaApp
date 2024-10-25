@@ -4,8 +4,9 @@ import { authApiSlice } from "./authApiSlice";
 import { profileApiSlice } from "./profileApiSlice";
 import { postApiSlice } from "./postApiSlice";
 import profileReducer from "./profileSlice";
-import postReducer from "./postSlice"
+import postReducer from "./postSlice";
 import allPostsReducer from "./allPostsSlice";
+import { commentApiSlice } from "./commentApiSlice";
 
 const appStore = configureStore({
   reducer: {
@@ -16,9 +17,15 @@ const appStore = configureStore({
     [authApiSlice.reducerPath]: authApiSlice.reducer,
     [profileApiSlice.reducerPath]: profileApiSlice.reducer,
     [postApiSlice.reducerPath]: postApiSlice.reducer,
+    [commentApiSlice.reducerPath]: commentApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApiSlice.middleware, profileApiSlice.middleware, postApiSlice.middleware), 
+    getDefaultMiddleware().concat(
+      authApiSlice.middleware,
+      profileApiSlice.middleware,
+      postApiSlice.middleware,
+      commentApiSlice.middleware,
+    ),
 });
 
 export default appStore;
