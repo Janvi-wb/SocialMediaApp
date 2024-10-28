@@ -6,7 +6,7 @@ import {
   getTimeDifference,
   truncateDescription,
 } from "../../../../utils/functions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useBookmarkPostMutation,
@@ -43,6 +43,12 @@ const Post = ({ post }) => {
   // Access allPosts from Redux store
   const allPosts = useSelector((state) => state.allPosts.allPosts);
 
+  // eslint-disable-next-line no-unused-vars
+  const [_, setRender] = useState(); // force component to re-render
+  useEffect(() => {
+    setRender((prev) => !prev);
+  }, [allPosts]);
+  
   const handleLike = async () => {
     console.log("LIKED/UNLIKED");
     try {
@@ -188,32 +194,3 @@ Post.propTypes = {
 
 export default Post;
 
-{
-  /* <div className="post-header">
-        <img
-          src={profilePicture || "https://via.placeholder.com/40x40.png"}
-          alt="Profile"
-          className="profile-picture"
-        />
-        <span className="profile-name">{profileName}</span>
-      </div>
-      <div className="post-body">
-        <img
-          src={postImage || "https://via.placeholder.com/800x450.png"}
-          alt="Post"
-          className="post-image"
-        />
-      </div> */
-}
-{
-  /* <div className="post-footer">
-        <div className="post-actions">
-          <span className="post-action">&#x2665;</span>
-          <span className="post-action">&#128172;</span>
-          <span className="post-action">&#9993;</span>
-        </div>
-        <div className="post-caption">
-          <strong>{profileName}</strong> {caption}
-        </div>
-      </div> */
-}

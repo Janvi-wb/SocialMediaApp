@@ -33,6 +33,14 @@ export const profileApiSlice = createApi({
     followersUser: builder.query({
       query: (userName) => `/follow/list/followers/${userName}`,
     }),
+    updateProfile : builder.mutation({
+      query: (data) => ({
+          url: `/profile`,
+          method: 'PATCH',
+          body: data,
+      }),
+  }),
+
   }),
 });
 
@@ -41,4 +49,5 @@ export const {
   useFollowUnfollowUserMutation,
   useFollowingUserQuery,
   useFollowersUserQuery,
+  useUpdateProfileMutation
 } = profileApiSlice;

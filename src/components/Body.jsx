@@ -12,6 +12,7 @@ import Logout from "../features/Auth/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addCredentials } from "../../store/userSlice";
+import EditProfile from "../features/Profile/components/EditProfile";
 
 // ProtectedRoute component to check if the user is logged in for protected routes
 // eslint-disable-next-line react/prop-types
@@ -82,6 +83,10 @@ const Body = () => {
     {
       path: "/logout",
       element: <ProtectedRoute element={<Logout />} />
+    },
+    {
+      path : "/profile/edit",
+      element: <EditProfile />
     },
     {
       path: "*",

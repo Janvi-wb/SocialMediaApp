@@ -30,7 +30,7 @@ const Header = () => {
 
             <div className="profile-user-settings">
               <h1 className="profile-user-name">{profile?.account?.username}</h1>
-              <button className="btn profile-edit-btn">Edit Profile</button>
+              <Link to="/profile"><button className="btn profile-edit-btn">Edit Profile</button></Link>
               {(userName  && userName !== user.username) && <button className="btn profile-edit-btn">{(profile.isFollowing) ? "Following" : "Follow"}</button>}
               <button
                 className="btn profile-settings-btn"
