@@ -16,6 +16,7 @@ import { addAllPosts } from "../../../../store/allPostsSlice";
 import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
+  //console.log(post, "POST POST");
   const {
     _id,
     author,
@@ -33,7 +34,7 @@ const Post = ({ post }) => {
 
   const profilePicture =
     author?.coverImage?.url || "https://via.placeholder.com/40x40.png";
-  const profileName = `${author?.firstName} ${author?.lastName}`;
+  const profileName = `${author?.account.username}`;
   const postImage =
     images?.[0]?.url || "https://via.placeholder.com/800x450.png";
   const [isExpanded, setIsExpanded] = useState(false);
@@ -65,6 +66,7 @@ const Post = ({ post }) => {
   const handleBookmark = async () => {
     try {
       const response = await bookmarkPost(_id).unwrap();
+      console.log(response, "BOOKMARK");
       const updatedPosts = updatePostInStore(
         _id,
         {
@@ -104,7 +106,9 @@ const Post = ({ post }) => {
             <div className="post-image">
               <img src={profilePicture} alt="" />
             </div>
-            <p className="post-username">{profileName}</p>
+            <Link to={`/profile/${profileName}`}>
+              <p className="post-username">{profileName}</p>
+            </Link>
             <span className="one-day">. {getTimeDifference(createdAt)}</span>
           </div>
           <img
@@ -153,7 +157,9 @@ const Post = ({ post }) => {
               </span>
             )}
           </p>
-          <p className="comments"> view all comments</p>
+          <Link to={`/comments/${post._id}`}>
+            <p className="comments"> view all comments</p>
+          </Link>
           <div className="add-comment">
             <input
               type="text"

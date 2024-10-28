@@ -14,7 +14,9 @@ export const profileApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: () => "/profile",
+      query: (userName) => userName
+      ? `/profile/u/${userName}`
+      : `/profile`,
     }),
 
     followUnfollowUser: builder.mutation({

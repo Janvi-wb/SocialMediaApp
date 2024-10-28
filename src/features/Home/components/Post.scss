@@ -24,6 +24,7 @@
   
   .post-main {
     color: var(--font-color);
+    padding: 0;
   }
   
   .post-image {
@@ -88,12 +89,16 @@
   }
   
   .post-main-image {
-    margin-top: 10px;
+    margin: 0;
+    padding: 0;
     width: 100%;
   
     img {
+
       width: 100%;
-      border-radius: 1px;
+      height: auto;
+      display: block;
+      border-radius: 2px;
     }
   }
   

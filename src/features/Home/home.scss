@@ -189,6 +189,11 @@
     height: 100vh;
     background-color: #fafafa;
     color: #262626;
+
+    @media (min-width: 768px) { 
+      max-width: 650px; 
+      margin: 0 auto;  
+    }
   }
   
   .top-bar {
@@ -253,6 +258,7 @@
   
     .top-bar {
       padding: 8px;
+  
       .search-bar {
         width: 65%;
       }
@@ -260,6 +266,7 @@
   
     .stories {
       padding: 8px;
+  
       .story {
         width: 60px;
         height: 60px;

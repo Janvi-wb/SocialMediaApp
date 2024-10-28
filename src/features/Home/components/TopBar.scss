@@ -2,21 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #fff;
-  border-bottom: 1px solid #dbdbdb;
-
-  .search-bar {
-    width: 30%;
-    padding: 5px;
-    border-radius: 7px;
-    border: 1px solid #dbdbdb;
-    background-color: #fafafa;
-    color: #262626;
-  }
+  border-bottom: 1px solid #eeeeee;
 
   .logo {
-    margin: 0px 15px;
+    margin-right: auto;
     padding: 10px;
     background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_b20f2a3cd7e4.png/b20f2a3cd7e4.png");
     background-position: 2px -287px;
@@ -27,15 +18,49 @@
 
   .top-icons {
     display: flex;
+    align-items: center;
+    gap: 20px; /* Space between icons */
 
-    .top-icon {
-      margin-left: 15px;
+    i {
       font-size: 1.5rem;
+      color: #262626;
+      cursor: pointer;
+
+      &:hover {
+        color: #0095f6; /* Change color on hover */
+      }
+    }
+
+    .logout-button {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      font-size: 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+
+      &:hover {
+        background-color: #0095f6;
+        color: #fff;
+      }
+
+      i {
+        font-size: 1rem; /* Adjust icon size */
+      }
     }
   }
 }
 
 .input::placeholder {
-    color: gray;
-    opacity: 1;
+  color: gray;
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .top-bar {
+    display: none;
+  }
 }

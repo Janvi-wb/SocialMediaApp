@@ -2,10 +2,15 @@ import { useDispatch } from "react-redux";
 import { useGetProfileQuery } from "../../../../store/profileApiSlice";
 import { setProfile, setLoading, setError } from "../../../../store/profileSlice";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export const useProfile = () => {
   const dispatch = useDispatch();
-  const { data: profileData, isLoading, error } = useGetProfileQuery();
+  const location = useLocation()
+  const userName = location.pathname.split("/")[2];
+  console.log(userName, "IN HOOK");
+  //const userName = useSelector(store => store?.user?.user?.userName);
+  const { data: profileData, isLoading, error } = useGetProfileQuery(userName);
 
   if (isLoading) {
     dispatch(setLoading(true));
@@ -22,6 +27,7 @@ export const useProfile = () => {
         dispatch(setProfile(profileData.data)); 
       }
   })
+  console.log(profileData?.data, "DATA FROM HOOK");
 
   return { profile: profileData?.data, isLoading, error };
 };

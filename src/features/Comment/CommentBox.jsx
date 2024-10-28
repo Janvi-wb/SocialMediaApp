@@ -3,6 +3,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useAddCommentLikeMutation } from "../../../store/commentApiSlice";
 import { Link } from "react-router-dom";
+import { DEFAULT_PHOTO_URL } from "../../../utils/constants";
 
 // eslint-disable-next-line react/prop-types
 const CommentBox = ({ comment }) => {
@@ -14,20 +15,20 @@ const CommentBox = ({ comment }) => {
       const res = await addCommentLike({ commentId: comment._id });
       console.log(res);
     } catch (err) {
-      console.error("Failed to like comment:", err);
+      console.error(err, "FAILED TO LIKE");
     }
   };
 
   const [commentContent, setCommentContent] = useState(
     comment.content.length > 50
-      ? `${comment.content.substring(0, 100)}... more`
+      ? `${comment.content.substring(0, 100)}...more`
       : comment.content
   );
   return (
     <div className="comment">
       <img
         className="avatar"
-        src={comment?.author?.account?.avatar?.url}
+        src={DEFAULT_PHOTO_URL || comment?.author?.account?.avatar?.url}
         alt={comment?.author?.account?.username}
       />
 

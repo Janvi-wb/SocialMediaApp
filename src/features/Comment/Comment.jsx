@@ -1,17 +1,20 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGetCommentsQuery, useAddCommentMutation } from "../../../store/commentApiSlice";
 import CommentBox from "./CommentBox";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import './Comment.scss';
+import ShimmerComment from "./ShimmerComment";
 
 const Comment = ()=>{
-    const postId = useLocation().pathname.split("/")[2];
-    console.log(postId);
+  const [newCommentContent, setNewCommentContent] = useState("");
+  const navigate = useNavigate();
     const CommentText = useRef();
+    const postId = useLocation().pathname.split("/")[2];
+    console.log(postId, "POST ID");
 
-    const {data , isLoading} = useGetCommentsQuery({postId});
-    //const [addComment, { isLoading }] = useAddCommentMutation();
-    const [addComment] = useAddCommentMutation();
+    const {data , isCommentsLoading} = useGetCommentsQuery({postId});
+    const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
+    //const [addComment] = useAddCommentMutation();
     console.log(data);
 
     const handlePostComment = async()=>{
@@ -23,19 +26,22 @@ const Comment = ()=>{
       }
   
       try {
+        setNewCommentContent(content);
         const res = await addComment({ postId, content }); 
-        console.log("Comment posted:", res);
+        console.log(res, "COMMENT ADDED!");
         CommentText.current.value = ""; 
+        setNewCommentContent("");
       } catch (err) {
-        console.error("Failed to post comment:", err);
+        console.error(err);
       }
     };
   
-    if (isLoading) return <p>Loading comments...</p>;
+    if (isCommentsLoading) return <p>Loading comments...</p>;
 
     return (
         <div className="comment-page">
           <header className="header">
+          <button onClick={() => navigate(-1)} className="back-button">Back</button>
             <h2>Comments</h2>
           </header>
     
@@ -43,6 +49,7 @@ const Comment = ()=>{
             {data?.data?.comments?.map((comment) => (
               <CommentBox key={comment._id} comment={comment} />
             ))}
+            {isAddingComment && <ShimmerComment content={newCommentContent} />}
           </div>
     
           <div className="add-comment">

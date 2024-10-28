@@ -56,7 +56,14 @@ export const useRegisterUser = () => {
     }
   };
 
-  return { userLogin, userSignup };
+  const userLogout = () => {
+    dispatch(addCredentials({ user: null, token: null }));
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
+    navigate("/");
+};
+
+  return { userLogin, userSignup, userLogout };
 };
 
 

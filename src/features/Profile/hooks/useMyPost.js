@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetMyPostsQuery } from '../../../../store/postApiSlice';
 import { setPosts, setStatus, setError } from "./../../../../store/postSlice"
+import { useLocation } from 'react-router-dom';
 
 export const useMyPost = () => {
   const dispatch = useDispatch();
-  const { data: postData, error, isLoading } = useGetMyPostsQuery();
+  const location = useLocation()
+  const userName = location.pathname.split("/")[2];
+  const { data: postData, error, isLoading } = useGetMyPostsQuery(userName);
   //console.log(postData, "DATA");
 
   useEffect(() => {

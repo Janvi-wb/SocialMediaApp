@@ -1,67 +1,99 @@
 import Loginn from "../features/Auth/Loginn";
-import {createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Home from "../features/Home/Home";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { addCredentials } from "../../store/userSlice";
 import Profile from "../features/Profile/Profile";
 import PostModal from "../features/Profile/components/PostModal";
 import FollowerModal from "../features/Profile/components/FollowerModal";
 import FollowingModal from "../features/Profile/components/FollowingModal";
 import Comment from "../features/Comment/Comment";
+import CreatePost from "../features/Profile/components/CreatePost";
+import Explore from "../Explore/Explore";
+import Logout from "../features/Auth/Logout";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { addCredentials } from "../../store/userSlice";
+
+// ProtectedRoute component to check if the user is logged in for protected routes
+// eslint-disable-next-line react/prop-types
+const ProtectedRoute = ({ element }) => {
+  const token = useSelector(store => store?.user?.token) || localStorage.getItem('accessToken');
+  return token ? element : <Navigate to="/" />;
+};
+
+// PublicRoute component to redirect logged-in users away from the login page
+// eslint-disable-next-line react/prop-types
+const PublicRoute = ({ element }) => {
+  const token = useSelector(store => store?.user?.token) || localStorage.getItem('accessToken');
+  return token ? <Navigate to="/home" /> : element;
+};
 
 const Body = () => {
-
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     const user = localStorage.getItem('user');
     const accessToken = localStorage.getItem('accessToken');
     if(user && accessToken) {
-      dispatch(addCredentials({user:JSON.parse(user), token: accessToken}));
+      dispatch(addCredentials({ user: JSON.parse(user), token: accessToken }));
     }
-  },[]);
+  }, [dispatch]);
 
-   const appRouter = createBrowserRouter([
+  const appRouter = createBrowserRouter([
     {
-      path: "*",
-      element: <Loginn />
+      path: "/",
+      element: <PublicRoute element={<Loginn />} />
     },
     {
-        path: "/",
-        element: <Loginn />
-    },
-    {
-        path: "/home",
-        element: <Home />
+      path: "/home",
+      element: <ProtectedRoute element={<Home />} />
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: <ProtectedRoute element={<Profile />} />
     },
     {
       path: "/post/:id",
-      element: <PostModal />
+      element: <ProtectedRoute element={<PostModal />} />
     },
     {
       path: "/followers/:username",
-      element: <FollowerModal />
+      element: <ProtectedRoute element={<FollowerModal />} />
     },
     {
       path: "/following/:username",
-      element: <FollowingModal />
+      element: <ProtectedRoute element={<FollowingModal />} />
     },
     {
       path: "comments/:id",
-      element: <Comment />
+      element: <ProtectedRoute element={<Comment />} />
+    },
+    {
+      path: "/createPost",
+      element: <ProtectedRoute element={<CreatePost />} />
+    },
+    {
+      path: "/profile/:username",
+      element: <ProtectedRoute element={<Profile />} />
+    },
+    {
+      path: "/explore",
+      element: <ProtectedRoute element={<Explore />} />
+    },
+    {
+      path: "/logout",
+      element: <ProtectedRoute element={<Logout />} />
+    },
+    {
+      path: "*",
+      element: <Navigate to="/" />
     }
-   ])
-   
+  ]);
+  
   return (
     <div>
-        <RouterProvider router={appRouter} />
+      <RouterProvider router={appRouter} />
     </div>
-  )
-}
+  );
+};
 
 export default Body;
