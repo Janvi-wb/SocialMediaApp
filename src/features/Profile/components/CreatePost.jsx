@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useAddPostMutation } from "../../../../store/postApiSlice";
 import "./CreatePost.scss";
 import { useNavigate } from "react-router-dom";
+import { setPosts, setStatus } from "../../../../store/postSlice";
+import { setError } from "../../../../store/profileSlice";
+import { useDispatch } from "react-redux";
 
 const CreatePost = () => {
     const navigate = useNavigate();
@@ -13,6 +16,7 @@ const CreatePost = () => {
 
 
   const [addPost, { isLoading }] = useAddPostMutation();
+  const dispatch = useDispatch();
 
   // Handle tag input on pressing 'Enter'
   const handleTagInput = (e) => {
@@ -63,16 +67,16 @@ const CreatePost = () => {
       }
 
     try {
-      //await dispatch(setStatus('loading'));
+      await dispatch(setStatus('loading'));
       const response = await addPost(formData).unwrap();
       console.log(response, "RESPONSE OF ADDING DATA");
       alert("successfully created post!")
       navigate("/home");
-      //dispatch(setPosts(response.data));
-      //await dispatch(setStatus('succeeded'));
+      dispatch(setPosts(response.data));
+      await dispatch(setStatus('succeeded'));
     } catch (error) {
-      // await dispatch(setError(error));
-      // await dispatch(setStatus('failed'));
+      await dispatch(setError(error));
+      await dispatch(setStatus('failed'));
       console.log(error, "ERROR FROM ADD POST");
     }
   };
