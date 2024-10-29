@@ -29,19 +29,7 @@ const Explore = () => {
     }
   };
 
-  function debounce(func, delay) {
-    let timeoutId;
-    return function (...args) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = setTimeout(() => {
-        func(...args);
-      }, delay);
-    };
-  }
-
-  window.addEventListener("scroll", debounce(handleScroll, 500));
+   window.addEventListener("scroll", handleScroll);
   useEffect(() => {
     if (loading == true) {
       setPage((prevPage) => prevPage + 1);

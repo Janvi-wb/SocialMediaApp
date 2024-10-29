@@ -8,13 +8,13 @@ const Header = () => {
   const location = useLocation();
   const userName = location.pathname.split("/")[2];
   const user = useSelector((store) => store?.user?.user);
-  console.log(user, "USERNAME");
+  //console.log(user, "USERNAME");
   // console.log(profile, "PROFILE DATA");
   const {profile, isLoading} = useProfile();
-  console.log(profile?.isFollowing, "PROFILE ISFOLLOWING");
+  //console.log(profile?.isFollowing, "PROFILE ISFOLLOWING");
 
   if(isLoading) return <h1>loading...</h1>
-  console.log(profile?.isFollowing, "PROFILE ISFOLLOWING");
+  //console.log(profile?.isFollowing, "PROFILE ISFOLLOWING");
 
   return (
     <>
@@ -30,7 +30,7 @@ const Header = () => {
 
             <div className="profile-user-settings">
               <h1 className="profile-user-name">{profile?.account?.username}</h1>
-              <Link to="/profile"><button className="btn profile-edit-btn">Edit Profile</button></Link>
+              <button className="btn profile-edit-btn">Edit Profile</button>
               {(userName  && userName !== user.username) && <button className="btn profile-edit-btn">{(profile.isFollowing) ? "Following" : "Follow"}</button>}
               <button
                 className="btn profile-settings-btn"

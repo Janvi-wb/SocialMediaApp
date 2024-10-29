@@ -9,7 +9,6 @@ export const commentApiSlice = createApi({
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
-      //console.log(token, "TOKEN");
       return headers;
     },
   }),

@@ -11,9 +11,9 @@ const CommentBox = ({ comment }) => {
     useAddCommentLikeMutation();
   const handleCommentLike = async () => {
     try {
-      console.log(comment._id);
-      const res = await addCommentLike({ commentId: comment._id });
-      console.log(res);
+      //console.log(comment._id);
+      await addCommentLike({ commentId: comment._id });
+      //console.log(res);
     } catch (err) {
       console.error(err, "FAILED TO LIKE");
     }

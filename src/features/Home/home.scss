@@ -206,19 +206,9 @@
     border-bottom: 1px solid #dbdbdb;
   }
   
-  .stories {
-    flex-shrink: 0; /* Prevent shrinking */
-    display: flex;
-    overflow-x: auto;
-    padding: 10px;
-    background-color: #fff;
-    border-bottom: 1px solid #dbdbdb;
-  }
-  
   .post-section {
-    flex-grow: 1; /* Allow post section to grow and fill space */
-    overflow-y: auto; /* Scroll posts */
-    padding: 15px 0;
+    flex-grow: 1; 
+    overflow-y: auto; 
   }
   
   .post {

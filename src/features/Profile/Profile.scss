@@ -145,113 +145,30 @@ img {
   font-weight: 600;
 }
 
-/* Gallery Section */
-
-// .gallery {
-//     display: flex;
-//     flex-wrap: wrap;
-//     margin: -1rem -1rem;
-//     padding-bottom: 3rem;
-// }
-
-// .gallery-item {
-//     position: relative;
-//     flex: 1 0 22rem;
-//     margin: 1rem;
-//     color: #fff;
-//     cursor: pointer;
-// }
-// .gallery {
-//     display: flex;
-//     flex-wrap: wrap;
-//     margin: -1rem -1rem;
-//     padding-bottom: 3rem;
-//     justify-content: space-between; /* Distribute evenly */
-// }
-
-// .gallery-item {
-//     flex: 1 0 calc(33.333% - 2rem); /* 3 columns */
-//     margin: 1rem;
-//     max-width: calc(33.333% - 2rem); /* Ensure max width */
-//     color: #fff;
-//     cursor: pointer;
-// }
-
-// @media (max-width: 20rem) {
-//     .gallery-item {
-//         flex: 1 0 calc(33.333% - 1rem); /* Keep 3 columns on mobile */
-//         max-width: calc(33.333% - 1rem); /* Adjust margin for smaller screens */
-//     }
-// }
-
-// .gallery-item:hover .gallery-item-info,
-// .gallery-item:focus .gallery-item-info {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     position: absolute;
-//     top: 0;
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(0, 0, 0, 0.3);
-// }
-
-// .gallery-item-info {
-//     display: none;
-// }
-
-// .gallery-item-info li {
-//     display: inline-block;
-//     font-size: 1.7rem;
-//     font-weight: 600;
-// }
-
-// .gallery-item-likes {
-//     margin-right: 2.2rem;
-// }
-
-// .gallery-item-type {
-//     position: absolute;
-//     top: 1rem;
-//     right: 1rem;
-//     font-size: 2.5rem;
-//     text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
-// }
-
-// .fa-clone,
-// .fa-comment {
-//     transform: rotateY(180deg);
-// }
-
-// .gallery-image {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-// }
 
 /* Gallery Section */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Ensure 3 equal columns */
-    gap: 0.2rem; /* Adjust the spacing between items */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 0.2rem; 
     padding-bottom: 3rem;
-    justify-content: start; /* Align the grid items at the start */
+    justify-content: start; 
   }
   
   .gallery-item {
     position: relative;
-    width: 100%; /* Ensure items take full width of grid cell */
+    width: 100%; 
     color: #fff;
     cursor: pointer;
-    overflow: hidden; /* Hide overflow */
-    border-radius: 2px; /* Optional, for rounded corners */
+    overflow: hidden;
+    border-radius: 2px; 
   }
   
   .gallery-image {
     width: 100%;
     height: auto;
     object-fit: cover;
-    aspect-ratio: 1/1; /* Ensure images are square */
+    aspect-ratio: 1/1; 
   }
 
 .gallery-item:hover .gallery-item-info,
@@ -304,23 +221,6 @@ img {
   flex: 1 0 30%;
 }
 
-/* Mobile Media Query */
-@media (max-width: 30rem) {
-
-  .gallery-item {
-    flex: 1 0 30%; /* Adjust for smaller screens */
-    max-width: 100%;
-    //margin: 0.3rem;
-  }
-}
-
-/* Make sure items align even when fewer than 3 */
-@media (min-width: 30rem) and (max-width: 60rem) {
-  .gallery {
-    justify-content: space-around;
-  }
-}
-
 /* Loader */
 
 .loader {
@@ -336,10 +236,6 @@ img {
 /* Media Query */
 
 @media screen and (max-width: 30rem) {
-  .container-postGrid {
-    max-width: 100%;
-  }
-
   .profile {
     display: flex;
     flex-wrap: wrap;
@@ -436,96 +332,25 @@ img {
   }
 }
 
-/*
-
-The following code will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling. 
-
-*/
-
-// @supports (display: grid) {
-//     .profile {
-//         display: grid;
-//         grid-template-columns: 1fr 2fr;
-//         grid-template-rows: repeat(3, auto);
-//         grid-column-gap: 3rem;
-//         align-items: center;
-//     }
-
-//     .profile-image {
-//         grid-row: 1 / -1;
-//     }
-
-//     .gallery {
-//         display: grid;
-//         grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-//         grid-gap: 2rem;
-//     }
-
-//     .profile-image,
-//     .profile-user-settings,
-//     .profile-stats,
-//     .profile-bio,
-//     .gallery-item,
-//     .gallery {
-//         width: auto;
-//         margin: 0;
-//     }
-
-//     @media (max-width: 40rem) {
-//         .profile {
-//             grid-template-columns: auto 1fr;
-//             grid-row-gap: 1.5rem;
-//         }
-
-//         .profile-image {
-//             grid-row: 1 / 2;
-//         }
-
-//         .profile-user-settings {
-//             display: grid;
-//             grid-template-columns: auto 1fr;
-//             grid-gap: 1rem;
-//         }
-
-//         .profile-edit-btn,
-//         .profile-stats,
-//         .profile-bio {
-//             grid-column: 1 / -1;
-//         }
-
-//         .profile-user-settings,
-//         .profile-edit-btn,
-//         .profile-settings-btn,
-//         .profile-bio,
-//         .profile-stats {
-//             margin: 0;
-//         }
-//     }
-// }
-
 .profile-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure it takes full viewport height */
+  min-height: 100vh; 
   overflow-y: hidden;
   height: 100vh;
 }
 
 .content {
-  flex: 1; /* This makes the content area grow to take up available space */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Disable horizontal scrolling */
+  flex: 1; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
 }
 
 footer {
-  background-color: #f8f9fa; /* Example styling, can be customized */
+  background-color: #f8f9fa; 
   padding: 1rem;
   text-align: center;
-  /* You can add other footer-specific styling here */
 }
-
 
 // custom scrollbar styling
 .container::-webkit-scrollbar {
@@ -544,5 +369,41 @@ footer {
   .container::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  // post navigation
+  .post-navigation {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid rgb(214, 213, 213);
+    border-bottom: 1px solid rgb(214, 213, 213);
+    padding: 10px 0;
+    max-width: 40%;
+    margin: 0 auto;
+  }
+
+  /* Mobile Media Query */
+@media (max-width: 48rem) {
+  .container-postGrid {
+    max-width: 100%;
+  }
+  .gallery-item {
+    flex: 1 0 30%; 
+    max-width: 100%;
+    //margin: 0.3rem;
+  }
+  .post-navigation {
+    max-width: 100%;
+  }
+}
+
+/* Make sure items align even when fewer than 3 */
+@media (min-width: 30rem) and (max-width: 60rem) {
+  .gallery {
+    justify-content: space-around;
+  }
+}
+
+
+
   
   

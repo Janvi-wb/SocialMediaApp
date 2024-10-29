@@ -16,10 +16,14 @@ export const postApiSlice = createApi({
   endpoints: (builder) => ({
     getAllPosts: builder.query({
       query: () => `/posts?page=1&limit=20`,
+      providesTags: (result) =>
+        result
+            ? result.data.posts.map(({ id }) => ({ type: 'Post', id })) // Provide tags for each post
+            : [],
     }),
     getPostById: builder.query({
         query: (postId) => `/posts/${postId}`,
-        //providesTags: (result, error, postId) => [{ type: "Post", id: postId }],
+        providesTags: (result, error, postId) => [{ type: "Post", id: postId }],
     }),
     getMyPosts: builder.query({
       query: (userName) =>
@@ -32,7 +36,8 @@ export const postApiSlice = createApi({
           url: `/posts`,
           method: 'POST',
           body: data,
-      })
+      }),
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }],
   }),
 
     likePost: builder.mutation({
@@ -40,12 +45,14 @@ export const postApiSlice = createApi({
         url: `like/post/${postId}`,
         method: "POST",
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }],
     }),
     bookmarkPost: builder.mutation({
       query: (postId) => ({
         url: `bookmarks/${postId}`,
         method: "POST",
       }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }], 
     }),
   }),
 });

@@ -9,10 +9,10 @@ const PostModal = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const postId = location.pathname.split("/")[2];
-  console.log(postId);
+  //console.log(postId);
 
   const { data: postData } = useGetPostByIdQuery(postId);
-  console.log(postData);
+  console.log(postData, "POST-DATA");
 
 
   const closeModal = () => {

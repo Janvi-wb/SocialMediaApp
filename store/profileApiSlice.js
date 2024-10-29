@@ -14,9 +14,7 @@ export const profileApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getProfile: builder.query({
-      query: (userName) => userName
-      ? `/profile/u/${userName}`
-      : `/profile`,
+      query: (userName) => (userName ? `/profile/u/${userName}` : `/profile`),
     }),
 
     followUnfollowUser: builder.mutation({
@@ -30,17 +28,22 @@ export const profileApiSlice = createApi({
       query: (userName) => `/follow/list/following/${userName}`,
     }),
 
-    followersUser: builder.query({
+    followersUser: builder.query({  
       query: (userName) => `/follow/list/followers/${userName}`,
     }),
-    updateProfile : builder.mutation({
+    updateProfile: builder.mutation({
       query: (data) => ({
-          url: `/profile`,
-          method: 'PATCH',
-          body: data,
+        url: `/profile`,
+        method: "PATCH",
+        body: data,
       }),
-  }),
-
+    }),
+    getBookmarkedPosts: builder.query({
+      query: () => ({
+        url: "/bookmarks",
+        method: "GET",
+      }),
+    })
   }),
 });
 
@@ -49,5 +52,6 @@ export const {
   useFollowUnfollowUserMutation,
   useFollowingUserQuery,
   useFollowersUserQuery,
-  useUpdateProfileMutation
+  useUpdateProfileMutation,
+  useGetBookmarkedPostsQuery
 } = profileApiSlice;

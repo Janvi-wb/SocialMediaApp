@@ -10,12 +10,12 @@ const Comment = ()=>{
   const navigate = useNavigate();
     const CommentText = useRef();
     const postId = useLocation().pathname.split("/")[2];
-    console.log(postId, "POST ID");
+    //console.log(postId, "POST ID");
 
     const {data , isCommentsLoading} = useGetCommentsQuery({postId});
     const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
     //const [addComment] = useAddCommentMutation();
-    console.log(data);
+    //console.log(data);
 
     const handlePostComment = async()=>{
       const content = CommentText.current.value;
@@ -27,8 +27,8 @@ const Comment = ()=>{
   
       try {
         setNewCommentContent(content);
-        const res = await addComment({ postId, content }); 
-        console.log(res, "COMMENT ADDED!");
+        await addComment({ postId, content }); 
+        //console.log(res, "COMMENT ADDED!");
         CommentText.current.value = ""; 
         setNewCommentContent("");
       } catch (err) {

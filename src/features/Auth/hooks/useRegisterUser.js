@@ -17,7 +17,7 @@ export const useRegisterUser = () => {
       const response = await login(data).unwrap();
       //console.log(response, "RESPONSE");
       if (response.success) {
-        console.log(response.data.user, "USER");
+        //console.log(response.data.user, "USER");
         dispatch(
           addCredentials({
             user: response.data.user,

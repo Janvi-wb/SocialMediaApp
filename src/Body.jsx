@@ -1,27 +1,25 @@
-import Loginn from "../features/Auth/Loginn";
+import Loginn from "./features/Auth/Loginn";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import Home from "../features/Home/Home";
-import Profile from "../features/Profile/Profile";
-import PostModal from "../features/Profile/components/PostModal";
-import FollowerModal from "../features/Profile/components/FollowerModal";
-import FollowingModal from "../features/Profile/components/FollowingModal";
-import Comment from "../features/Comment/Comment";
-import CreatePost from "../features/Profile/components/CreatePost";
-import Explore from "../Explore/Explore";
-import Logout from "../features/Auth/Logout";
+import Home from "./features/Home/Home";
+import Profile from "./features/Profile/Profile";
+import PostModal from "./features/Profile/components/PostModal";
+import FollowerModal from "./features/Profile/components/FollowerModal";
+import FollowingModal from "./features/Profile/components/FollowingModal";
+import Comment from "./features/Comment/Comment";
+import CreatePost from "./features/Profile/components/CreatePost";
+import Explore from "./Explore/Explore";
+import Logout from "./features/Auth/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addCredentials } from "../../store/userSlice";
-import EditProfile from "../features/Profile/components/EditProfile";
+import { addCredentials } from "../store/userSlice";
+import EditProfile from "./features/Profile/components/EditProfile";
 
-// ProtectedRoute component to check if the user is logged in for protected routes
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ element }) => {
   const token = useSelector(store => store?.user?.token) || localStorage.getItem('accessToken');
   return token ? element : <Navigate to="/" />;
 };
 
-// PublicRoute component to redirect logged-in users away from the login page
 // eslint-disable-next-line react/prop-types
 const PublicRoute = ({ element }) => {
   const token = useSelector(store => store?.user?.token) || localStorage.getItem('accessToken');
@@ -37,7 +35,7 @@ const Body = () => {
     if(user && accessToken) {
       dispatch(addCredentials({ user: JSON.parse(user), token: accessToken }));
     }
-  }, [dispatch]);
+  }, []);
 
   const appRouter = createBrowserRouter([
     {

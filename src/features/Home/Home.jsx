@@ -1,43 +1,36 @@
 import "./home.scss";
 import { useGetAllPostsQuery } from "../../../store/postApiSlice";
 import TopBar from "./components/TopBar";
-import Stories from "./components/Stories";
-import Post from "./components/Post";
 import Footer from "./components/Footer";
 import { useProfile } from "./hooks/useProfile";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addAllPosts } from "../../../store/allPostsSlice";
 import PostShimmer from "./components/PostShimmer";
+import Post from "./components/Post";
 
 const Home = () => {
-
   const dispatch = useDispatch();
-
   const { data: allPost, isLoading, error } = useGetAllPostsQuery();
-  const {isLoading: isProfileLoading, isError: profileError} = useProfile();
+  const { isLoading: isProfileLoading, isError: profileError } = useProfile();
 
   useEffect(() => {
-    dispatch(addAllPosts(allPost?.data?.posts));
-  }, []);
+    if (allPost?.data?.posts) {
+      dispatch(addAllPosts(allPost.data.posts));
+    }
+  }, [allPost, dispatch]);
 
   const posts = allPost?.data?.posts || [];
-  //const posts = useSelector(store => store.allPosts.allPosts);
-  
-  if (isLoading ||  isProfileLoading) return <h4><PostShimmer /></h4>;
+
+  if (isLoading || isProfileLoading) return <h4><PostShimmer /></h4>;
   if (error || profileError) return <p>Error fetching posts</p>;
 
   return (
     <div className="instagram-home">
       <TopBar />
-
-      {posts?.length > 0 && (
-        <Stories />
-      )}
-
       <div className="post-section">
-        {posts?.map((post) => (
-          <Post key={post._id} post={post} />
+        {posts.map((post) => (
+          <Post key={post._id} post={post} /> 
         ))}
       </div>
 

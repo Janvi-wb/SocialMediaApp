@@ -37,7 +37,7 @@ const EditProfile = () => {
             lastName: name?.lastName,
             bio,
         }
-        console.log(formData);
+        //console.log(formData);
 
         try {
             await updateUserProfile(formData).unwrap();

@@ -5,11 +5,11 @@ const useFollowUnfollow = () => {
 
     const [followUnfollowUser] = useFollowUnfollowUserMutation();
     const currentUser = useSelector((state)=> state.user.user.username);
-    console.log("CURR USER FROM HOOK", currentUser);
+    //console.log("CURR USER FROM HOOK", currentUser);
 
 
     const ToggleFollow = async(userId , userName)=>{
-        console.log(userName , userId, "IN HOOK FUNC");
+        //console.log(userName , userId, "IN HOOK FUNC");
         try {
           const res = await followUnfollowUser({userId : userId , currentUser : currentUser, userName : userName}).unwrap();
           return res;

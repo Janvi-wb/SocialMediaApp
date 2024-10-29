@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import "./Post.scss";
 import "../../Home/home.scss";
@@ -40,14 +41,18 @@ const Post = ({ post }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [comment, setComment] = useState("");
 
-  // Access allPosts from Redux store
-  const allPosts = useSelector((state) => state.allPosts.allPosts);
+  const allPosts = useSelector((state) => state?.allPosts?.allPosts);
 
-  // eslint-disable-next-line no-unused-vars
-  const [_, setRender] = useState(); // force component to re-render
-  useEffect(() => {
-    setRender((prev) => !prev);
-  }, [allPosts]);
+  const UpdatedPost = allPosts.filter(post => post._id === _id);
+
+  if(!UpdatedPost) return <p>Loading...</p>
+
+  // // eslint-disable-next-line no-unused-vars
+  // const [_, setRender] = useState();
+  // useEffect(() => {
+  //   setRender((prev) => !prev);
+  // }, []);
+
   
   const handleLike = async () => {
     console.log("LIKED/UNLIKED");
@@ -129,8 +134,8 @@ const Post = ({ post }) => {
         <div className="post-fotter">
           <div className="post-fotter-left">
             <i
-              className={`fa-${isLiked ? "solid" : "regular"} fa-heart`}
-              style={{ color: isLiked ? "red" : "black" }}
+              className={`fa-${UpdatedPost[0]?.isLiked ? "solid" : "regular"} fa-heart`}
+              style={{ color: UpdatedPost[0]?.isLiked ? "red" : "black" }}
               onClick={handleLike}
             ></i>
             <Link to={`/comments/${post._id}`}>
@@ -139,14 +144,14 @@ const Post = ({ post }) => {
             <i className="fa-regular fa-paper-plane"></i>
           </div>
           <i
-            className={`fa-${isBookmarked ? "solid" : "regular"} fa-bookmark`}
-            style={{ color: isBookmarked ? "black" : "grey" }}
+            className={`fa-${UpdatedPost[0]?.isBookmarked ? "solid" : "regular"} fa-bookmark`}
+            style={{ color: UpdatedPost?.isBookmarked ? "black" : "grey" }}
             onClick={handleBookmark}
           ></i>
         </div>
         <div className="post-description">
           <p className="post-liked">
-            <strong>{likes} Likes</strong>
+            <strong>{UpdatedPost[0]?.likes} Likes</strong>
           </p>
           <p className="title">
             <strong>{profileName}</strong> {descriptionText}
@@ -166,14 +171,14 @@ const Post = ({ post }) => {
           <Link to={`/comments/${post._id}`}>
             <p className="comments"> view all comments</p>
           </Link>
-          <div className="add-comment">
+          {/* <div className="add-comment">
             <input
               type="text"
               placeholder="Add a comment..."
               value={comment}
               onChange={handleCommentChange}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

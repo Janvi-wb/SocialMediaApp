@@ -11,7 +11,7 @@ const Logout = () => {
     navigate('/');
   }, [navigate]);
 
-  return null; // No need to render anything
+  return null; 
 };
 
 export default Logout;
