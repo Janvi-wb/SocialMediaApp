@@ -7,7 +7,6 @@ const TopBar = () => {
         <div className="logo"></div>
       {/* <input type="text" placeholder="Search" className="search-bar" /> */}
       <div className="top-icons">
-        <i className="fa-regular fa-heart"></i>
         <Link to="/logout"><button className="menu-item logout-button"><i className="fa-solid fa-right-from-bracket"></i></button></Link>
       </div>
     </div>

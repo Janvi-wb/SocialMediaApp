@@ -1,124 +1,155 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./CreatePost.scss";
 import { useAddPostMutation } from "../../../../store/postApiSlice";
+import "./CreatePost.scss";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
-    const [addPost, { isLoading }] = useAddPostMutation();
     const navigate = useNavigate();
-    const [image, setImage] = useState(null);
-    const [preview, setPreview] = useState(null);
-    const [tags, setTags] = useState([]);
-    const [tagInput, setTagInput] = useState("");
-    const [caption, setCaption] = useState("");
-
-    const handleTagInputChange = (e) => {
-        setTagInput(e.target.value);
-    };
-
-    const handleTagKeyDown = (e) => {
-        if (e.key === "Enter" && tagInput.trim()) {
-            setTags((prevTags) => [...prevTags, tagInput.trim()]);
-            setTagInput(""); 
-            e.preventDefault(); 
-        }
-    };
-
-    const removeTag = (index) => {
-        setTags((prevTags) => prevTags.filter((tag, i) => i !== index));
-    };
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const url = URL.createObjectURL(file);
-            setImage(file);
-            setPreview(url);
-        }
-    };
+  const [images, setImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [caption, setCaption] = useState("");
+  const [tags, setTags] = useState([]);
+  const [inputTag, setInputTag] = useState("");
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!image || !caption) {
-            console.log("All fields are required");
-            return;
-        }
+  const [addPost, { isLoading }] = useAddPostMutation();
 
-        const formData = new FormData();
-        formData.append("image", image);
-        formData.append("caption", caption);
-        tags.forEach((tag, i) => {
-         formData.append(`tag[${i}] : `, tag )
-     })
+  // Handle tag input on pressing 'Enter'
+  const handleTagInput = (e) => {
+    if (e.key === "Enter" && inputTag.trim() !== "") {
+      e.preventDefault(); 
+      setTags((prevTags) => [...prevTags, inputTag.trim()]);
+      setInputTag(""); 
+    }
+  };
 
-        try {
-            const response = await addPost(formData).unwrap();
-            console.log("Post created!", response);
-            navigate("/home");
-        } catch (err) {
-            console.error("FAILED POST CREATION", err);
-        }
-    };
 
-    return (
-        <div className="add-post-page">
-            <div className="modal-content">
-                <button onClick={() => navigate(-1)} className="close-button">x</button>
-                <div className="header">Create Post</div>
-                <div className="image-preview">
-                    {preview ? (
-                        <>
-                            <button className="remove-image-button" onClick={() => setPreview(null)}>
-                                <img src="https://pic.onlinewebfonts.com/svg/img_577400.svg" className="remove-image" alt="Remove" />
-                            </button>
-                            <img src={preview} alt="Preview" />
-                        </>
-                    ) : (
-                        <label htmlFor="file-upload" className="upload-label">
-                            <img src="https://www.svgrepo.com/show/379235/photo-add.svg" className="add-photo-icon" alt="Upload" />
-                            Upload Photo
-                        </label>
-                    )}
-                </div>
-                <form className="form" onSubmit={handleSubmit}>
-                    <input
-                        type="file"
-                        id="file-upload"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Caption"
-                        value={caption}
-                        onChange={(e) => setCaption(e.target.value)}
-                    />
-
-                    {/* Tags Input */}
-                    <div className="tags-container">
-                        {tags.map((tag, index) => (
-                            <div key={index} className="tag-chip">
-                                {tag}
-                                <button onClick={() => removeTag(index)}>x</button>
-                            </div>
-                        ))}
-                        <input
-                            type="text"
-                            placeholder="Add a tag (press Enter)"
-                            value={tagInput}
-                            onChange={handleTagInputChange}
-                            onKeyDown={handleTagKeyDown}
-                        />
-                    </div>
-
-                    <button type="submit" disabled={isLoading}>
-                        {!isLoading ? "Post" : "Posting..."}
-                    </button>
-                </form>
-            </div>
-        </div>
+  const handleRemoveTag = (indexToRemove) => {
+    setTags((prevTags) =>
+      prevTags.filter((_, index) => index !== indexToRemove)
     );
+  };
+
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setPreviewUrl(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    console.log(images, "IMAGE");
+
+    formData.append("images", images);
+    console.log(caption, "CAPTION");
+    formData.append("content", caption);
+    console.log(tags, "TAGS");
+
+    tags.forEach((tag) => formData.append("tags[]", tag));
+
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+
+    try {
+      //await dispatch(setStatus('loading'));
+      const response = await addPost(formData).unwrap();
+      console.log(response, "RESPONSE OF ADDING DATA");
+      alert("successfully created post!")
+      navigate("/home");
+      //dispatch(setPosts(response.data));
+      //await dispatch(setStatus('succeeded'));
+    } catch (error) {
+      // await dispatch(setError(error));
+      // await dispatch(setStatus('failed'));
+      console.log(error, "ERROR FROM ADD POST");
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+      className="create-post-form"
+    >
+      <div
+        className="image-upload-box"
+        onClick={() => document.getElementById("fileInput").click()}
+      >
+        {previewUrl ? (
+          <>
+            <img src={previewUrl} alt="Preview" className="preview-image" />
+            <span
+              className="remove-image"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRemoveImage();
+              }}
+            >
+              &#x2716;
+            </span>
+          </>
+        ) : (
+          <div className="upload-placeholder">
+            <span className="upload-icon"><i className="fa-solid fa-image"></i>
+            </span>
+            <span>Upload Image</span>
+          </div>
+        )}
+        <input
+          type="file"
+          id="fileInput"
+          onChange={handleImageChange}
+          accept="image/*"
+          style={{ display: "none" }}
+        />
+      </div>
+
+      <div>
+        <textarea
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+          placeholder="Write a caption..."
+        />
+      </div>
+
+      <div>
+        <div className="tags-container">
+          {tags.map((tag, index) => (
+            <span
+              key={index}
+              className="tag"
+              onClick={() => handleRemoveTag(index)}
+            >
+              {tag} &#x2716; {" "}{" "}{" "}
+            </span>
+          ))}
+        </div>
+        <input
+          type="text"
+          value={inputTag}
+          onChange={(e) => setInputTag(e.target.value)}
+          onKeyDown={handleTagInput}
+          placeholder="Add a tag and press Enter"
+        />
+      </div>
+
+      <button type="submit" disabled={isLoading}>
+      {isLoading ? "Posting..." : "Post"}
+      </button>
+    </form>
+  );
 };
 
 export default CreatePost;

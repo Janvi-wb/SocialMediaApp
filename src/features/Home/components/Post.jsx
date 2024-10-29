@@ -122,11 +122,6 @@ const Post = ({ post }) => {
             </Link>
             <span className="one-day">. {getTimeDifference(createdAt)}</span>
           </div>
-          <img
-            className="dots"
-            src="https://clipground.com/images/three-dots-png-1.png"
-            alt="menu"
-          />
         </div>
         <div className="post-main-image">
           <img src={postImage} alt="" />
