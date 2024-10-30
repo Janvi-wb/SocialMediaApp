@@ -19,7 +19,7 @@ const PostGrid = ({ posts }) => {
       <main>
         <div className="container-postGrid">
           <div className="gallery">
-            {posts.map((post, index) => (
+            {[...posts].reverse().map((post, index) => (
               <>
                 <Link to={`/post/${post._id}`} key={index}>
                   <div className="gallery-item" tabIndex="0" key={post._id}>

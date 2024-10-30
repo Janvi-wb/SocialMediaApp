@@ -10,7 +10,7 @@ export const useProfile = () => {
   const userName = location.pathname.split("/")[2];
   //console.log(userName, "IN HOOK");
   //const userName = useSelector(store => store?.user?.user?.userName);
-  const { data: profileData, isLoading, error } = useGetProfileQuery(userName);
+  const { data: profileData, isLoading, error, refetch } = useGetProfileQuery(userName);
 
   if (isLoading) {
     dispatch(setLoading(true));
@@ -29,5 +29,5 @@ export const useProfile = () => {
   })
   //console.log(profileData?.data, "DATA FROM HOOK");
 
-  return { profile: profileData?.data, isLoading, error };
+  return { profile: profileData?.data, isLoading, error, refetch };
 };

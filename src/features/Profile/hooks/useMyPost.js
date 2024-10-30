@@ -30,6 +30,5 @@ export const useMyPost = () => {
   const status = useSelector((state) => state?.myPosts?.status);
   const errorMessage = useSelector((state) => state?.myPosts?.error);
 
-
   return { posts, status, errorMessage };
 };

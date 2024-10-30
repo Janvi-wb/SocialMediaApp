@@ -39,6 +39,9 @@ const allPostsSlice = createSlice({
         post._id === updatedPost._id ? updatedPost : post
       );
     },
+    addNewPost: (state, action) => {
+      state.allPosts = [action.payload, ...state.allPosts];
+    },
   },
   //   extraReducers: (builder) => {
   //     builder
@@ -58,5 +61,5 @@ const allPostsSlice = createSlice({
   //   },
 });
 
-export const { addAllPosts, updatePost } = allPostsSlice.actions;
+export const { addAllPosts, updatePost, addNewPost } = allPostsSlice.actions;
 export default allPostsSlice.reducer;

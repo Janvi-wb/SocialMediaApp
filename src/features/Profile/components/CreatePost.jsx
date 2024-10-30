@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useAddPostMutation } from "../../../../store/postApiSlice";
 import "./CreatePost.scss";
 import { useNavigate } from "react-router-dom";
-import { setPosts, setStatus } from "../../../../store/postSlice";
+import { setStatus, updateMyPosts } from "../../../../store/postSlice";
 import { setError } from "../../../../store/profileSlice";
 import { useDispatch } from "react-redux";
+import { addNewPost } from "../../../../store/allPostsSlice";
 
 const CreatePost = () => {
     const navigate = useNavigate();
@@ -56,11 +57,11 @@ const CreatePost = () => {
     console.log(images, "IMAGE");
 
     formData.append("images", images);
-    console.log(caption, "CAPTION");
-    formData.append("content", caption);
+    console.log(caption, "CAPTION"); 
+    formData.append("content", caption);// mistake (caption -> "content")
     console.log(tags, "TAGS");
 
-    tags.forEach((tag) => formData.append("tags[]", tag));
+    tags.forEach((tag, i) => formData.append(`tags[${i}]`, tag));
 
     for (let pair of formData.entries()) {
         console.log(pair[0] + ': ' + pair[1]);
@@ -69,15 +70,19 @@ const CreatePost = () => {
     try {
       await dispatch(setStatus('loading'));
       const response = await addPost(formData).unwrap();
-      console.log(response, "RESPONSE OF ADDING DATA");
-      alert("successfully created post!")
+       console.log(response, "RESPONSE OF ADDING DATA");
+       const newPost = response.data;
+       console.log(newPost, "NEW POST");
+       dispatch(addNewPost(newPost));
+       alert("successfully created post!")
+        
       navigate("/home");
-      dispatch(setPosts(response.data));
+      dispatch(updateMyPosts(response.data));
       await dispatch(setStatus('succeeded'));
     } catch (error) {
       await dispatch(setError(error));
       await dispatch(setStatus('failed'));
-      console.log(error, "ERROR FROM ADD POST");
+    //   console.log(error, "ERROR FROM ADD POST");
     }
   };
 

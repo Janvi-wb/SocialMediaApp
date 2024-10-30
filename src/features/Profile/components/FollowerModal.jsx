@@ -4,16 +4,45 @@ import { useFollowersUserQuery } from "../../../../store/profileApiSlice";
 import useFollowUnfollow from "../../Home/hooks/useFollowUnfollow";
 import "./Follow.scss";
 import { DEFAULT_PHOTO_URL } from "../../../../utils/constants";
+import { useEffect, useState } from "react";
 
 const FollowerModal = () => {
   const { username } = useParams(); // Get the userId from the route
   const currentUser = useSelector((state) => state.user?.user?.username);
-  const { data } = useFollowersUserQuery(username);
+  const { data, refetch } = useFollowersUserQuery(username);
+  console.log(data);
 
   const { ToggleFollow } = useFollowUnfollow();
+
+  const [followers, setFollowers] = useState([]);
+
+  useEffect(() => {
+    if (data?.data?.followers) {
+      setFollowers(data.data.followers);
+    }
+  }, [data]);
+
   const handleUnFollow = async (followerId) => {
+    setFollowers((prevFollowers) =>
+      prevFollowers.map((follower) =>
+        follower._id === followerId
+          ? { ...follower, isFollowing: !follower.isFollowing }
+          : follower
+      )
+    );
+
     const response = await ToggleFollow(followerId);
-    console.log(response, "RESPONSE");
+    if (response.success) {
+      refetch();
+    } else {
+      setFollowers((prevFollowers) =>
+        prevFollowers.map((follower) =>
+          follower._id === followerId
+            ? { ...follower, isFollowing: !follower.isFollowing }
+            : follower
+        )
+      );
+    }
   };
 
   const navigate = useNavigate();
@@ -31,7 +60,7 @@ const FollowerModal = () => {
           <p className="no-followers">No followers yet</p>
         )}
 
-        {data?.data?.followers?.map((follower) => (
+        {followers.map((follower) => (
           <div key={follower.id} className="follower-card">
             <div className="follower-info">
               <img

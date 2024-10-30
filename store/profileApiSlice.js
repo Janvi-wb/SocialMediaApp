@@ -34,7 +34,7 @@ export const profileApiSlice = createApi({
     updateProfile: builder.mutation({
       query: (data) => ({
         url: `/profile`,
-        method: "PATCH",
+        method: "POST",
         body: data,
       }),
     }),

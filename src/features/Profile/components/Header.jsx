@@ -3,18 +3,31 @@ import { DEFAULT_PHOTO_URL } from "../../../../utils/constants";
 import { Link, useLocation } from "react-router-dom";
 import { useProfile } from "../../Home/hooks/useProfile";
 import { useSelector } from "react-redux";
+import useFollowUnfollow from "../../Home/hooks/useFollowUnfollow";
+import { useState } from "react";
 
 const Header = () => {
   const location = useLocation();
   const userName = location.pathname.split("/")[2];
   const user = useSelector((store) => store?.user?.user);
-  //console.log(user, "USERNAME");
-  // console.log(profile, "PROFILE DATA");
-  const {profile, isLoading} = useProfile();
-  //console.log(profile?.isFollowing, "PROFILE ISFOLLOWING");
+  const { profile, isLoading, refetch } = useProfile();
 
-  if(isLoading) return <h1>loading...</h1>
-  //console.log(profile?.isFollowing, "PROFILE ISFOLLOWING");
+  const { ToggleFollow } = useFollowUnfollow();
+
+  const [isFollowing, setIsFollowing] = useState(profile?.isFollowing);
+
+  const handleUnFollow = async (followerId) => {
+    setIsFollowing(!isFollowing);
+
+    const response = await ToggleFollow(followerId);
+    if (response?.success) {
+      refetch();
+    } else {
+      setIsFollowing(!isFollowing);
+    }
+  };
+
+  if (isLoading) return <h1>loading...</h1>;
 
   return (
     <>
@@ -29,9 +42,18 @@ const Header = () => {
             </div>
 
             <div className="profile-user-settings">
-              <h1 className="profile-user-name">{profile?.account?.username}</h1>
-              <button className="btn profile-edit-btn">Edit Profile</button>
-              {(userName  && userName !== user.username) && <button className="btn profile-edit-btn">{(profile.isFollowing) ? "Following" : "Follow"}</button>}
+              <h1 className="profile-user-name">
+                {profile?.account?.username}
+              </h1>
+              <Link to="/profile/edit"><button className="btn profile-edit-btn">Edit Profile</button></Link>
+              {userName && userName !== user.username && (
+                <button
+                  onClick={() => handleUnFollow(profile.account._id, userName)}
+                  className="btn profile-edit-btn"
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </button>
+              )}
               <button
                 className="btn profile-settings-btn"
                 aria-label="profile settings"
@@ -52,17 +74,15 @@ const Header = () => {
                   <Link to={`/followers/${profile?.account?.username}`}>
                     <span className="profile-stat-count">
                       {profile.followersCount}
-                    </span>
+                    </span>{" "}
                     followers
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={`/following/${profile?.account?.username}`}
-                  >
+                  <Link to={`/following/${profile?.account?.username}`}>
                     <span className="profile-stat-count">
                       {profile.followingCount}
-                    </span>
+                    </span>{" "}
                     following
                   </Link>
                 </li>
