@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addCredentials } from "../store/userSlice";
 import EditProfile from "./features/Profile/components/EditProfile";
+import Search from "./features/Home/components/Search";
+import TopBar from "./features/Home/components/TopBar";
+import Footer from "./features/Home/components/Footer";
 
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ element }) => {
@@ -85,6 +88,10 @@ const Body = () => {
     {
       path : "/profile/edit",
       element: <EditProfile />
+    },
+    {
+      path : "/search",
+      element: <><TopBar /><Search /><Footer /></>
     },
     {
       path: "*",

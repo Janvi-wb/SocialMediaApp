@@ -1,0 +1,52 @@
+.search-page {
+  padding: 1rem 0;
+  min-height: 88vh;
+  margin: 0 auto;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.4rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.search-bar button {
+  padding: 0.2rem 0.6rem;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 0 4px 4px 0;
+}
+
+.search-bar button .search-icon {
+  font-size: 1.2rem;
+}
+
+.posts-list {
+  max-height: 77vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.posts-list::-webkit-scrollbar {
+    display: none; 
+}
+
+@media (min-width: 48rem) {
+    .search-page {
+        max-width: 38rem;
+    }
+  }
+  

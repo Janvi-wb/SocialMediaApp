@@ -199,3 +199,7 @@ input:not(:placeholder-shown) {
   color: $signup-color;
   font-weight: 600;
 }
+
+.error-message {
+  color: rgb(255, 72, 72);
+}

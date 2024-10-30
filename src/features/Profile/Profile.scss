@@ -279,7 +279,7 @@ img {
 
   .profile-edit-btn {
     order: 1;
-    padding: 0;
+    //padding: 0; // css conflict
     text-align: center;
     margin-top: 1rem;
   }

@@ -36,7 +36,18 @@ export const profileApiSlice = createApi({
         url: `/profile`,
         method: "POST",
         body: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
       }),
+    }),
+    updateCoverPhoto: builder.mutation({
+      query: (data) => ({
+        url: `/profile/cover-image`,
+        method: "POST",
+        body: data,
+      })
     }),
     getBookmarkedPosts: builder.query({
       query: () => ({
@@ -53,5 +64,6 @@ export const {
   useFollowingUserQuery,
   useFollowersUserQuery,
   useUpdateProfileMutation,
+  useUpdateCoverPhotoMutation,
   useGetBookmarkedPostsQuery
 } = profileApiSlice;

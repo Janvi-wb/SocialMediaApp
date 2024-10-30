@@ -60,6 +60,9 @@ export const postApiSlice = createApi({
         method: 'DELETE',
       }),
     }),
+    getPostsByTag: builder.query({
+      query: (tag) => `posts/get/t/${tag}?page=1&limit=10`
+    }),
   }),
 });
 
@@ -70,5 +73,6 @@ export const {
   useAddPostMutation,
   useLikePostMutation,
   useBookmarkPostMutation,
-  useDeleteMyPostMutation
+  useDeleteMyPostMutation,
+  useGetPostsByTagQuery
 } = postApiSlice;
