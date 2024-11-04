@@ -15,7 +15,7 @@ export const postApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getAllPosts: builder.query({
-      query: () => `/posts?page=1&limit=20`,
+      query: ({page, limit}) => `/posts?page=${page}&limit=${limit}`,
       providesTags: (result) =>
         result
             ? result.data.posts.map(({ id }) => ({ type: 'Post', id })) // Provide tags for each post

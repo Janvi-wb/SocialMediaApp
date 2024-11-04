@@ -33,6 +33,9 @@ const allPostsSlice = createSlice({
     addAllPosts: (state, action) => {
       state.allPosts = action.payload;
     },
+    appendPostInAllPost: (state, action) => {
+      state.allPosts.unshift(action.payload);
+    },
     updatePost: (state, action) => {
       const updatedPost = action.payload;
       state.allPosts = state.allPosts.map((post) =>
@@ -61,5 +64,5 @@ const allPostsSlice = createSlice({
   //   },
 });
 
-export const { addAllPosts, updatePost, addNewPost } = allPostsSlice.actions;
+export const { addAllPosts, updatePost, addNewPost, appendPostInAllPost } = allPostsSlice.actions;
 export default allPostsSlice.reducer;

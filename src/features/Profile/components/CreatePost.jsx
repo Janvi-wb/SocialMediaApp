@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useAddPostMutation } from "../../../../store/postApiSlice";
 import "./CreatePost.scss";
 import { useNavigate } from "react-router-dom";
-import { setStatus, updateMyPosts } from "../../../../store/postSlice";
+import { appendPost, setStatus, updateMyPosts } from "../../../../store/postSlice";
 import { setError } from "../../../../store/profileSlice";
 import { useDispatch } from "react-redux";
-import { addNewPost } from "../../../../store/allPostsSlice";
+import { addNewPost, appendPostInAllPost } from "../../../../store/allPostsSlice";
 import { toast } from "react-toastify";
 
 const CreatePost = () => {
@@ -72,9 +72,11 @@ const CreatePost = () => {
       console.log(newPost, "NEW POST");
       dispatch(addNewPost(newPost));
       toast.success("Post is created!")
-
+      dispatch(updateMyPosts(response?.data));
+      dispatch(appendPost(response?.data));
+      dispatch(appendPostInAllPost(response?.data));
       navigate("/home");
-      dispatch(updateMyPosts(response.data));
+
       await dispatch(setStatus("succeeded"));
     } catch (error) {
       await dispatch(setError(error));
