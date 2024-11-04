@@ -9,6 +9,7 @@ export const profileApiSlice = createApi({
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
+      headers.set("origin","http://localhost:5173")
       return headers;
     },
   }),
@@ -37,15 +38,12 @@ export const profileApiSlice = createApi({
     updateProfile: builder.mutation({
       query: (data) => ({
         url: "/profile",
-        method: "POST",
+        method: "PATCH",
         body: data,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
       }),
       invalidatesTags: (result, error, { userName }) => [{ type: 'Profile', id: userName }],
     }),
+
     getBookmarkedPosts: builder.query({
       query: () => ({
         url: "/bookmarks",

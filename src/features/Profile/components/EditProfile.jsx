@@ -1,30 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import "./EditProfile.scss";
-import {
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} from "../../../../store/profileApiSlice";
+import {useGetProfileQuery, useUpdateProfileMutation } from "../../../../store/profileApiSlice"
 import { useEffect, useState } from "react";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const { data: user, isLoading } = useGetProfileQuery();
-  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
   const [profileData, setProfileData] = useState({});
-  //const [preview, setPreview] = useState(null);
+  const { data: userProfile, isLoading } = useGetProfileQuery();
+  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
 
   useEffect(() => {
-    if (user) {
+    if (userProfile) {
       setProfileData({
-        firstName: user?.data?.firstName,
-        lastName: user?.data?.lastName,
-        bio: user?.data?.bio,
-        phoneNumber: user?.data?.phoneNumber,
+        firstName: userProfile?.data?.firstName,
+        lastName: userProfile?.data?.lastName,
+        bio: userProfile?.data?.bio,
+        phoneNumber: userProfile?.data?.phoneNumber,
       });
-      //setPreview(user?.data?.coverImage?.url);
     }
-  }, [user]);
+  }, [userProfile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,12 +37,9 @@ const EditProfile = () => {
     <div className="profile-edit-container">
       <h2 className="profile-title">Edit Profile</h2>
       {isLoading ? (
-        <p>Loading...</p>
+        <p>Getting profile...</p>
       ) : (
         <form onSubmit={handleSubmit}>
-          {/* <div className="profile-picture-wrapper">
-            <img src={preview || DEFAULT_PHOTO_URL} alt="Profile" />
-          </div> */}
           <div className="input-group">
             <p>First Name</p>
             <input
@@ -62,7 +54,7 @@ const EditProfile = () => {
             <p>Last Name</p>
             <input
               type="text"
-              value={profileData?.lastName || ""}
+              value={profileData?.lastName || " "}
               onChange={(e) =>
                 setProfileData({ ...profileData, lastName: e.target.value })
               }
@@ -71,7 +63,7 @@ const EditProfile = () => {
           <div className="input-group">
             <p>Bio</p>
             <textarea
-              value={profileData?.bio || ""}
+              value={profileData?.bio || " "}
               onChange={(e) =>
                 setProfileData({ ...profileData, bio: e.target.value })
               }
@@ -81,7 +73,7 @@ const EditProfile = () => {
             <p>Phone Number</p>
             <input
               type="number"
-              value={profileData?.phoneNumber || ""}
+              value={profileData?.phoneNumber || " "}
               onChange={(e) =>
                 setProfileData({ ...profileData, phoneNumber: e.target.value })
               }
