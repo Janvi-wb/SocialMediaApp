@@ -1,25 +1,33 @@
 /* eslint-disable react/prop-types */
 import "./Post.scss";
 import "../../Home/home.scss";
-import { getTimeDifference, truncateDescription } from "../../../../utils/functions";
+import {
+  getTimeDifference,
+  truncateDescription,
+} from "../../../../utils/functions";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { usePostActions } from "../hooks/usePostActions";
 
 const Post = ({ post }) => {
   const { _id, author, images, content, createdAt } = post;
-  const profilePicture = author?.coverImage?.url || "https://via.placeholder.com/40x40.png";
+  const profilePicture =
+    author?.coverImage?.url || "https://via.placeholder.com/40x40.png";
   const profileName = author?.account.username;
-  const postImage = images?.[0]?.url || "https://via.placeholder.com/800x450.png";
+  const postImage =
+    images?.[0]?.url || "https://via.placeholder.com/800x450.png";
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const { isLiked, isBookmarked, likes, handleLike, handleBookmark } = usePostActions(post);
+  const { isLiked, isBookmarked, likes, handleLike, handleBookmark } =
+    usePostActions(post);
 
   const toggleDescription = () => {
     setIsExpanded((prev) => !prev);
   };
 
-  const descriptionText = isExpanded ? content : truncateDescription(content, 10);
+  const descriptionText = isExpanded
+    ? content
+    : truncateDescription(content, 10);
 
   return (
     <div className="post-area">
@@ -64,17 +72,21 @@ const Post = ({ post }) => {
             <strong>{profileName}</strong> {descriptionText}
             {content.split(" ").length > 10 && !isExpanded && (
               <span className="read-more" onClick={toggleDescription}>
-                {" "} read more
+                {" "}
+                read more
               </span>
             )}
             {isExpanded && (
               <span className="read-less" onClick={toggleDescription}>
-                {" "} read less
+                {" "}
+                read less
               </span>
             )}
           </p>
           <Link to={`/comments/${_id}`}>
-            <p className="comments"> view all comments</p>
+            <p className="comments">
+              view all {post.comments} comments
+            </p>
           </Link>
         </div>
       </div>

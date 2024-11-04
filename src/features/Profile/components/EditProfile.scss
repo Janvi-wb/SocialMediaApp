@@ -1,86 +1,104 @@
-.edit-profile-page {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
+.profile-edit-container {
+    width: 100%;
+    max-width: 550px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+    .profile-title {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
     }
-
-    .profile-picture-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        margin-bottom: 20px;
-
-        img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-
-        .label {
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        // input {
-        //     display: none;
-        // }
+  
+    .profile-picture-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+  
+      img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+      }
     }
-
-    .form-group {
-        margin-bottom: 15px;
-
-        .label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 15px;
-            color: gray;
+  
+    .input-group {
+      margin-bottom: 15px;
+  
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #555;
+      }
+  
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        background-color: #fafafa;
+  
+        &:focus {
+          border-color: #007bff;
+          outline: none;
         }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        textarea {
-            resize: none;
-            height: 80px;
-        }
+      }
+  
+      textarea {
+        resize: vertical;
+        height: 100px;
+      }
     }
-
-    button {
-        width: 0%;
-        padding: 0;
-        background-color: #ffffff;
-        color: #7e7575;
+  
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+  
+      .save-btn,
+      .cancel-btn {
+        flex: 1;
+        padding: 10px 15px;
+        font-size: 1rem;
+        font-weight: 500;
         border: none;
-        font-size: 18px;
+        border-radius: 6px;
         cursor: pointer;
-        margin-top: 10px;
-        font-weight: bold;
-        margin-right: 70px;
-
+        transition: background-color 0.3s;
+  
         &:disabled {
-            background-color: #ffffff;
-            cursor: not-allowed;
+          cursor: not-allowed;
+          opacity: 0.7;
         }
-
-        &:last-child {
-            background-color: #ffffff;
-            margin-top: 5px;
+      }
+  
+      .save-btn {
+        background-color: #002fff;
+        color: #fff;
+  
+        &:hover:not(:disabled) {
+          background-color: #0056b3;
         }
+      }
+  
+      .cancel-btn {
+        background-color: #e0e0e0;
+        color: #333;
+  
+        &:hover:not(:disabled) {
+          background-color: #c0c0c0;
+        }
+      }
     }
-}
+  }
+  

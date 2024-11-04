@@ -1,21 +1,36 @@
 /* eslint-disable react/prop-types */
 import moment from "moment";
 import { useState } from "react";
-import { useAddCommentLikeMutation } from "../../../store/commentApiSlice";
+import {
+  useAddCommentLikeMutation,
+  useDeleteCommentMutation,
+} from "../../../store/commentApiSlice";
 import { Link } from "react-router-dom";
 import { DEFAULT_PHOTO_URL } from "../../../utils/constants";
+import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 const CommentBox = ({ comment }) => {
-  const [addCommentLike] =
-    useAddCommentLikeMutation();
+  const [addCommentLike] = useAddCommentLikeMutation();
+  const [deleteComment] = useDeleteCommentMutation();
+
+  const user = useSelector((state) => state.user?.user);
   const handleCommentLike = async () => {
     try {
       //console.log(comment._id);
       await addCommentLike({ commentId: comment._id });
       //console.log(res);
     } catch (err) {
-      console.error(err, "FAILED TO LIKE");
+      console.error("FAILED TO LIKE : ", err);
+    }
+  };
+
+  const handleDeleteComment = async () => {
+    try {
+      const res = await deleteComment({ commentId: comment._id });
+      console.log(res);
+    } catch (error) {
+      console.error("Failed to Delete comment :", error);
     }
   };
 
@@ -52,6 +67,11 @@ const CommentBox = ({ comment }) => {
         <div className="comment-actions">
           <span className="time">{moment(comment?.createdAt).fromNow()}</span>
           <span className="likes">{comment.likes} likes</span>
+          {user?._id === comment?.author?.account?._id && (
+            <button className="delete-btn" onClick={handleDeleteComment}>
+              <i className="fas fa-trash" aria-hidden="true"></i>
+            </button>
+          )}
         </div>
       </div>
 

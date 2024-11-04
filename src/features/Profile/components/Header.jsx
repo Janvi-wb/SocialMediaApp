@@ -5,6 +5,7 @@ import { useProfile } from "../../Home/hooks/useProfile";
 import { useSelector } from "react-redux";
 import useFollowUnfollow from "../../Home/hooks/useFollowUnfollow";
 import { useState } from "react";
+import HeaderShimmer from "../../../Shimmers/HeaderShimmer";
 
 const Header = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ const Header = () => {
     }
   };
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return <HeaderShimmer />;
 
   return (
     <>
@@ -45,7 +46,11 @@ const Header = () => {
               <h1 className="profile-user-name">
                 {profile?.account?.username}
               </h1>
-              <Link to="/profile/edit"><button className="btn profile-edit-btn">Edit Profile</button></Link>
+              {!userName && (
+                <Link to="/profile/edit">
+                  <button className="btn profile-edit-btn">Edit Profile</button>
+                </Link>
+              )}
               {userName && userName !== user.username && (
                 <button
                   onClick={() => handleUnFollow(profile.account._id, userName)}
@@ -54,19 +59,13 @@ const Header = () => {
                   {isFollowing ? "Following" : "Follow"}
                 </button>
               )}
-              <button
-                className="btn profile-settings-btn"
-                aria-label="profile settings"
-              >
-                <i className="fas fa-cog" aria-hidden="true"></i>
-              </button>
             </div>
 
             <div className="profile-stats">
               <ul>
                 <li>
                   <span className="profile-stat-count">
-                    {profile.followersCount}
+                    {profile.followingCount}
                   </span>{" "}
                   posts
                 </li>

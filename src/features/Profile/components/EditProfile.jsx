@@ -1,138 +1,105 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import "./EditProfile.scss";
 import {
   useGetProfileQuery,
-//   useUpdateCoverPhotoMutation,
   useUpdateProfileMutation,
 } from "../../../../store/profileApiSlice";
 import { useEffect, useState } from "react";
-//import { DEFAULT_PHOTO_URL } from "../../../../utils/constants";
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const { data: user, isLoading } = useGetProfileQuery();
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
-  //const [updateCoverPhoto, { isLoading: isCoverPhotoUpdating }] = useUpdateCoverPhotoMutation();
-
-  const [name, setName] = useState(null);
-  const [bio, setBio] = useState("");
-  //const [profilePicture, setProfilePicture] = useState(null);
+  const [profileData, setProfileData] = useState({});
   //const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     if (user) {
-      setName({
+      setProfileData({
         firstName: user?.data?.firstName,
         lastName: user?.data?.lastName,
+        bio: user?.data?.bio,
+        phoneNumber: user?.data?.phoneNumber,
       });
-      setBio(user?.data?.bio);
-    //   setPreview(
-    //     DEFAULT_PHOTO_URL ||
-    //       user?.data?.account?.avatar?.url ||
-    //       DEFAULT_PHOTO_URL
-    //   ); // Show existing profile picture
+      //setPreview(user?.data?.coverImage?.url);
     }
   }, [user]);
 
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-      //setProfilePicture(file);
-      //setPreview(URL.createObjectURL(file));
-//     }
-//   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("firstName", name?.firstName);
-    // formData.append("lastName", name?.lastName);
-    // formData.append("bio", bio);
-
-    // const formData1 = new FormData();
-    // formData1.append("coverImage", profilePicture);
-    const formData = {
-        bio: bio,
-        firstName: name?.firstName,
-        lastName: name?.lastName
-    }
-
-    console.log(formData, "FORM DATA");
-
-    //const formDataImage = { coverImage: profilePicture}
+    const formData = profileData;
 
     try {
-      const res = await updateProfile(formData).unwrap();
-      //const res1 = await updateCoverPhoto(formDataImage).unwrap();
-      console.log(res, "RES 1");
-      //console.log(res1, "RES 2");
-      alert("Profile updated successfully!");
+      await updateProfile(formData).unwrap();
       navigate("/profile");
     } catch (error) {
-      // Log full error details for troubleshooting
-      console.error("Failed to update profile:", error);
-      if (error?.status === "PARSING_ERROR") {
-        console.error("Response data:", error?.data);
-        alert("Failed to parse response. Please check the API or try again.");
-      } else {
-        alert("An error occurred while updating your profile.");
-      }
+      console.error("Failed :", error);
     }
   };
 
   return (
-    <div className="edit-profile-page">
-      <h1>Edit Profile</h1>
+    <div className="profile-edit-container">
+      <h2 className="profile-title">Edit Profile</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <form onSubmit={handleSubmit}>
-          {/* <div className="profile-picture-section">
-            <img src={preview || "/default-avatar.png"} alt="Profile" />
-            <p className="label" htmlFor="file-upload">
-              Change Profile Picture
-            </p>
-            <input
-              type="file"
-              id="file-upload"
-              accept="image/*"
-              onChange={handleImageChange}
-              // style={{ display: "none" }}
-            />
+          {/* <div className="profile-picture-wrapper">
+            <img src={preview || DEFAULT_PHOTO_URL} alt="Profile" />
           </div> */}
-          <div className="form-group">
-            <p className="label">First Name</p>
+          <div className="input-group">
+            <p>First Name</p>
             <input
               type="text"
-              value={name?.firstName}
+              value={profileData?.firstName || ""}
               onChange={(e) =>
-                setName({ firstName: e.target.value, lastName: name?.lastName })
+                setProfileData({ ...profileData, firstName: e.target.value })
               }
             />
           </div>
-          <div className="form-group">
-            <p className="label">Last Name</p>
+          <div className="input-group">
+            <p>Last Name</p>
             <input
               type="text"
-              value={name?.lastName}
+              value={profileData?.lastName || ""}
               onChange={(e) =>
-                setName({
-                  firstName: name?.firstName,
-                  lastName: e.target.value,
-                })
+                setProfileData({ ...profileData, lastName: e.target.value })
               }
             />
           </div>
-          <div className="form-group">
-            <p className="label">Bio</p>
-            <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
+          <div className="input-group">
+            <p>Bio</p>
+            <textarea
+              value={profileData?.bio || ""}
+              onChange={(e) =>
+                setProfileData({ ...profileData, bio: e.target.value })
+              }
+            />
           </div>
-          <button type="submit" disabled={isUpdating}>
-            {isUpdating  ? "Updating..." : "Save"}
-          </button>
-          <button type="button" onClick={() => navigate("/profile")}>
-            Cancel
-          </button>
+          <div className="input-group">
+            <p>Phone Number</p>
+            <input
+              type="number"
+              value={profileData?.phoneNumber || ""}
+              onChange={(e) =>
+                setProfileData({ ...profileData, phoneNumber: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="button-group">
+            <button type="submit" disabled={isUpdating} className="save-btn">
+              {isUpdating ? "Updating..." : "Save"}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/profile")}
+              className="cancel-btn"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       )}
     </div>

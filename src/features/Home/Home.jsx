@@ -6,8 +6,8 @@ import { useProfile } from "./hooks/useProfile";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addAllPosts } from "../../../store/allPostsSlice";
-import PostShimmer from "./components/PostShimmer";
 import Post from "./components/Post";
+import PostShimmer from "../../Shimmers/PostShimmer";
 
 const Home = () => {
   const dispatch = useDispatch();

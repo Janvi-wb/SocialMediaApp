@@ -1,0 +1,107 @@
+.post_container {
+  .post_header_shimmer {
+      display: flex;
+      align-items: center;
+      background-color: rgb(240, 240, 240);
+      padding: 15px;
+
+      .post_details_shimmer {
+          display: flex;
+          align-items: center;
+
+          .post_avatar_shimmer {
+              width: 45px;
+              height: 45px;
+              border-radius: 50%;
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+              background-color: rgb(240, 240, 240);
+              animation: shimmer 1.5s infinite;
+          }
+
+          .post_info_shimmer {
+              margin-left: 15px;
+
+              .post_info_name_shimmer,
+              .post_info_time_shimmer {
+                  height: 12px;
+                  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+                  background-color: rgb(240, 240, 240);
+                  animation: shimmer 1.5s infinite;
+                  margin: 6px 0;
+              }
+          }
+      }
+
+      .post_actions_shimmer {
+          width: 35px;
+          height: 35px;
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+          background-color: rgb(240, 240, 240);
+          animation: shimmer 1.5s infinite;
+      }
+  }
+
+  .post_content_shimmer {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+      background-color: rgb(240, 240, 240);
+      animation: shimmer 1.5s infinite;
+  }
+
+  .post_actions_shimmer {
+      display: flex;
+      justify-content: space-between;
+
+      .post_actions_left_shimmer,
+      .post_actions_right_shimmer {
+          width: 55px;
+          height: 32px;
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+          background-color: rgb(240, 240, 240);
+          animation: shimmer 1.5s infinite;
+      }
+  }
+
+  .post_footer_shimmer {
+      .post_footer_likes_shimmer,
+      .post_footer_caption_shimmer,
+      .post_footer_comments_shimmer {
+          height: 12px;
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+          background-color: rgb(240, 240, 240);
+          animation: shimmer 1.5s infinite;
+          margin: 6px 0;
+      }
+
+      .post_footer_comment_shimmer {
+          display: flex;
+          align-items: center;
+
+          textarea {
+              width: 100%;
+              height: 32px;
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+              background-color: rgb(240, 240, 240);
+              animation: shimmer 1.5s infinite;
+          }
+
+          button {
+              width: 55px;
+              height: 32px;
+              background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+              background-color: rgb(240, 240, 240);
+              animation: shimmer 1.5s infinite;
+          }
+      }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+      background-position: 100px 0;
+  }
+  100% {
+      background-position: -100px 0;
+  }
+}

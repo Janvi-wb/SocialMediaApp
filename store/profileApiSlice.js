@@ -15,6 +15,8 @@ export const profileApiSlice = createApi({
   endpoints: (builder) => ({
     getProfile: builder.query({
       query: (userName) => (userName ? `/profile/u/${userName}` : `/profile`),
+      providesTags: (result, error, userName) =>
+        result ? [{ type: "Profile", id: userName }] : []
     }),
 
     followUnfollowUser: builder.mutation({
@@ -28,33 +30,28 @@ export const profileApiSlice = createApi({
       query: (userName) => `/follow/list/following/${userName}`,
     }),
 
-    followersUser: builder.query({  
+    followersUser: builder.query({
       query: (userName) => `/follow/list/followers/${userName}`,
     }),
+
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: `/profile`,
+        url: "/profile",
         method: "POST",
         body: data,
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
       }),
-    }),
-    updateCoverPhoto: builder.mutation({
-      query: (data) => ({
-        url: `/profile/cover-image`,
-        method: "POST",
-        body: data,
-      })
+      invalidatesTags: (result, error, { userName }) => [{ type: 'Profile', id: userName }],
     }),
     getBookmarkedPosts: builder.query({
       query: () => ({
         url: "/bookmarks",
         method: "GET",
       }),
-    })
+    }),
   }),
 });
 
@@ -64,6 +61,5 @@ export const {
   useFollowingUserQuery,
   useFollowersUserQuery,
   useUpdateProfileMutation,
-  useUpdateCoverPhotoMutation,
-  useGetBookmarkedPostsQuery
+  useGetBookmarkedPostsQuery,
 } = profileApiSlice;

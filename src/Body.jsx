@@ -1,21 +1,24 @@
-import Loginn from "./features/Auth/Loginn";
+import { useEffect, Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import Loginn from "./features/Auth/Loginn";
 import Home from "./features/Home/Home";
-import Profile from "./features/Profile/Profile";
-import PostModal from "./features/Profile/components/PostModal";
-import FollowerModal from "./features/Profile/components/FollowerModal";
-import FollowingModal from "./features/Profile/components/FollowingModal";
-import Comment from "./features/Comment/Comment";
-import CreatePost from "./features/Profile/components/CreatePost";
-import Explore from "./Explore/Explore";
 import Logout from "./features/Auth/Logout";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { addCredentials } from "../store/userSlice";
-import EditProfile from "./features/Profile/components/EditProfile";
-import Search from "./features/Home/components/Search";
-import TopBar from "./features/Home/components/TopBar";
-import Footer from "./features/Home/components/Footer";
+import Loader from "./Loader";
+
+// Lazy-loaded components
+const Profile = lazy(() => import("./features/Profile/Profile"));
+const PostModal = lazy(() => import("./features/Profile/components/PostModal"));
+const FollowerModal = lazy(() => import("./features/Profile/components/FollowerModal"));
+const FollowingModal = lazy(() => import("./features/Profile/components/FollowingModal"));
+const Comment = lazy(() => import("./features/Comment/Comment"));
+const CreatePost = lazy(() => import("./features/Profile/components/CreatePost"));
+const Explore = lazy(() => import("./Explore/Explore"));
+const EditProfile = lazy(() => import("./features/Profile/components/EditProfile"));
+const Search = lazy(() => import("./features/Home/components/Search"));
+const TopBar = lazy(() => import("./features/Home/components/TopBar"));
+const Footer = lazy(() => import("./features/Home/components/Footer"));
 
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ element }) => {
@@ -31,14 +34,14 @@ const PublicRoute = ({ element }) => {
 
 const Body = () => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const user = localStorage.getItem('user');
     const accessToken = localStorage.getItem('accessToken');
-    if(user && accessToken) {
+    if (user && accessToken) {
       dispatch(addCredentials({ user: JSON.parse(user), token: accessToken }));
     }
-  }, []);
+  }, [dispatch]);
 
   const appRouter = createBrowserRouter([
     {
@@ -51,54 +54,86 @@ const Body = () => {
     },
     {
       path: "/profile",
-      element: <ProtectedRoute element={<Profile />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<Profile />} />
+        </Suspense>
+      )
     },
     {
       path: "/post/:id",
-      element: <ProtectedRoute element={<PostModal />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<PostModal />} />
+        </Suspense>
+      )
     },
     {
       path: "/followers/:username",
-      element: <ProtectedRoute element={<FollowerModal />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<FollowerModal />} />
+        </Suspense>
+      )
     },
     {
       path: "/following/:username",
-      element: <ProtectedRoute element={<FollowingModal />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<FollowingModal />} />
+        </Suspense>
+      )
     },
     {
       path: "comments/:id",
-      element: <ProtectedRoute element={<Comment />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<Comment />} />
+        </Suspense>
+      )
     },
     {
       path: "/createPost",
-      element: <ProtectedRoute element={<CreatePost />} />
-    },
-    {
-      path: "/profile/:username",
-      element: <ProtectedRoute element={<Profile />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<CreatePost />} />
+        </Suspense>
+      )
     },
     {
       path: "/explore",
-      element: <ProtectedRoute element={<Explore />} />
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<Explore />} />
+        </Suspense>
+      )
+    },
+    {
+      path: "/profile/edit",
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<EditProfile />} />
+        </Suspense>
+      )
+    },
+    {
+      path: "/search",
+      element: (
+        <Suspense fallback={<Loader />}>
+          <><TopBar /><Search /><Footer /></>
+        </Suspense>
+      )
     },
     {
       path: "/logout",
       element: <ProtectedRoute element={<Logout />} />
     },
     {
-      path : "/profile/edit",
-      element: <EditProfile />
-    },
-    {
-      path : "/search",
-      element: <><TopBar /><Search /><Footer /></>
-    },
-    {
       path: "*",
       element: <Navigate to="/" />
     }
   ]);
-  
+
   return (
     <div>
       <RouterProvider router={appRouter} />

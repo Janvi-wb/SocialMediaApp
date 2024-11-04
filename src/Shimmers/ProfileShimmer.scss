@@ -1,0 +1,103 @@
+
+  
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(240, 240, 240, 0.2) 0%,
+      rgba(230, 230, 230, 0.5) 50%,
+      rgba(240, 240, 240, 0.2) 100%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+
+  .profile-shimmer {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%; 
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .profile-header-shimmer {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  
+    .avatar-shimmer {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+  
+    .info-shimmer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+  
+      .username-shimmer {
+        width: 60%;
+        height: 20px;
+      }
+  
+      .button-shimmer {
+        width: 30%;
+        height: 30px;
+        margin-top: 8px;
+        border-radius: 4px;
+      }
+  
+      .stats-shimmer {
+        display: flex;
+        gap: 16px;
+  
+        .stat {
+          width: 20%;
+          height: 15px;
+        }
+      }
+    }
+  }
+
+  .profile-bio-shimmer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  
+    .line {
+      height: 15px;
+      width: 100%;
+    }
+  
+    .short {
+      width: 50%;
+    }
+  }
+  
+
+  .profile-gallery-shimmer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  
+    .gallery-item-shimmer {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      overflow: hidden;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  

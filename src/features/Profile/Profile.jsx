@@ -7,6 +7,7 @@ import { useMyPost } from "./hooks/useMyPost";
 import { useState } from "react";
 import { useGetBookmarkedPostsQuery } from "../../../store/profileApiSlice";
 import { useLocation } from "react-router-dom";
+import ProfileShimmer from "../../Shimmers/ProfileShimmer";
 
 const Profile = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const Profile = () => {
   const { posts: myPosts } = useMyPost();
   const { data, isLoading } = useGetBookmarkedPostsQuery();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <ProfileShimmer />;
 
   const bookmarkedPosts = data?.data?.bookmarkedPosts;
 

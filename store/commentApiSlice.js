@@ -35,12 +35,11 @@ export const commentApiSlice = createApi({
 
     deleteComment: builder.mutation({
       query: ({ commentId }) => ({
-        url: `/comments/post/${commentId}`,
+        url: `/comments/${commentId}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, { postId }) => [
-        { type: "Comments", id: postId },
-        { type: "Post", id: postId },
+        { type: "Comments", id: postId }
       ],
     }),
 

@@ -8,13 +8,12 @@ import { useDispatch } from "react-redux";
 import { addNewPost } from "../../../../store/allPostsSlice";
 
 const CreatePost = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [images, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [caption, setCaption] = useState("");
   const [tags, setTags] = useState([]);
   const [inputTag, setInputTag] = useState("");
-
 
   const [addPost, { isLoading }] = useAddPostMutation();
   const dispatch = useDispatch();
@@ -22,19 +21,17 @@ const CreatePost = () => {
   // Handle tag input on pressing 'Enter'
   const handleTagInput = (e) => {
     if (e.key === "Enter" && inputTag.trim() !== "") {
-      e.preventDefault(); 
+      e.preventDefault();
       setTags((prevTags) => [...prevTags, inputTag.trim()]);
-      setInputTag(""); 
+      setInputTag("");
     }
   };
-
 
   const handleRemoveTag = (indexToRemove) => {
     setTags((prevTags) =>
       prevTags.filter((_, index) => index !== indexToRemove)
     );
   };
-
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -43,7 +40,6 @@ const CreatePost = () => {
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
-
 
   const handleRemoveImage = () => {
     setImage(null);
@@ -57,32 +53,32 @@ const CreatePost = () => {
     console.log(images, "IMAGE");
 
     formData.append("images", images);
-    console.log(caption, "CAPTION"); 
-    formData.append("content", caption);// mistake (caption -> "content")
+    console.log(caption, "CAPTION");
+    formData.append("content", caption); // mistake (caption -> "content")
     console.log(tags, "TAGS");
 
     tags.forEach((tag, i) => formData.append(`tags[${i}]`, tag));
 
     for (let pair of formData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-      }
+      console.log(pair[0] + ": " + pair[1]);
+    }
 
     try {
-      await dispatch(setStatus('loading'));
+      await dispatch(setStatus("loading"));
       const response = await addPost(formData).unwrap();
-       console.log(response, "RESPONSE OF ADDING DATA");
-       const newPost = response.data;
-       console.log(newPost, "NEW POST");
-       dispatch(addNewPost(newPost));
-       alert("successfully created post!")
-        
+      console.log(response, "RESPONSE OF ADDING DATA");
+      const newPost = response.data;
+      console.log(newPost, "NEW POST");
+      dispatch(addNewPost(newPost));
+      console.log("successfully created post!");
+
       navigate("/home");
       dispatch(updateMyPosts(response.data));
-      await dispatch(setStatus('succeeded'));
+      await dispatch(setStatus("succeeded"));
     } catch (error) {
       await dispatch(setError(error));
-      await dispatch(setStatus('failed'));
-    //   console.log(error, "ERROR FROM ADD POST");
+      await dispatch(setStatus("failed"));
+      //   console.log(error, "ERROR FROM ADD POST");
     }
   };
 
@@ -92,6 +88,7 @@ const CreatePost = () => {
       encType="multipart/form-data"
       className="create-post-form"
     >
+        <h1 className="new-post-heading">New Post</h1>
       <div
         className="image-upload-box"
         onClick={() => document.getElementById("fileInput").click()}
@@ -111,7 +108,8 @@ const CreatePost = () => {
           </>
         ) : (
           <div className="upload-placeholder">
-            <span className="upload-icon"><i className="fa-solid fa-image"></i>
+            <span className="upload-icon">
+              <i className="fa-solid fa-image"></i>
             </span>
             <span>Upload Image</span>
           </div>
@@ -141,7 +139,7 @@ const CreatePost = () => {
               className="tag"
               onClick={() => handleRemoveTag(index)}
             >
-              {tag} &#x2716; {" "}{" "}{" "}
+              {tag} &#x2716;{" "}
             </span>
           ))}
         </div>
@@ -154,9 +152,23 @@ const CreatePost = () => {
         />
       </div>
 
-      <button type="submit" disabled={isLoading}>
-      {isLoading ? "Posting..." : "Post"}
-      </button>
+      <div className="button-group">
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`post-button ${isLoading ? "disabled" : ""}`}
+        >
+          {isLoading ? "Posting..." : "Post"}
+        </button>
+        <button
+          onClick={() => navigate(-1)}
+          type="button"
+          disabled={isLoading}
+          className={`cancel-button ${isLoading ? "disabled" : ""}`}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };
