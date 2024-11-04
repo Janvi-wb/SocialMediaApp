@@ -5,6 +5,7 @@ import {
   useSignupMutation,
 } from "../../../../store/authApiSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const useRegisterUser = () => {
   const [login, { isLoading: isLoginLoading }] = useLoginMutation();
@@ -24,13 +25,14 @@ export const useRegisterUser = () => {
         );
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("user", JSON.stringify(response.data.user));
+        toast.success("You're Logged in!")
         navigate("/home");
       } else {
-        //console.log(response?.message);
+        toast.error(response.message || "Try Again!")
       }
       return response;
     } catch (e) {
-      return e;
+      toast.error(e.data?.message || 'Try again.');
     }
   };
 
@@ -46,14 +48,14 @@ export const useRegisterUser = () => {
             token: response.data.accessToken,
           })
         );
-        //console.log("Signup Successfully!");
+        toast.success("You're Signed up!")
         toggleForm();
       } else {
-        //console.log(response?.message);
+        toast.error(response.message || "Try Again!")
       }
       return {response};
     } catch (e) {
-      return e;
+      toast.error(e.data?.message || 'Try again.');
     }
   };
 

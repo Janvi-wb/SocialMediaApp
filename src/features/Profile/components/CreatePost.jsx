@@ -6,6 +6,7 @@ import { setStatus, updateMyPosts } from "../../../../store/postSlice";
 import { setError } from "../../../../store/profileSlice";
 import { useDispatch } from "react-redux";
 import { addNewPost } from "../../../../store/allPostsSlice";
+import { toast } from "react-toastify";
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const CreatePost = () => {
       const newPost = response.data;
       console.log(newPost, "NEW POST");
       dispatch(addNewPost(newPost));
-      console.log("successfully created post!");
+      toast.success("Post is created!")
 
       navigate("/home");
       dispatch(updateMyPosts(response.data));

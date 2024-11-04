@@ -14,7 +14,7 @@ const Profile = () => {
 
   const userName = location.pathname.split("/")[2];
   const [view, setView] = useState("posts");
-  const { posts: myPosts } = useMyPost();
+  const { posts: myPosts } =  useMyPost();
   const { data, isLoading } = useGetBookmarkedPostsQuery();
 
   if (isLoading) return <ProfileShimmer />;

@@ -13,6 +13,8 @@ const Header = () => {
   const user = useSelector((store) => store?.user?.user);
   const { profile, isLoading, refetch } = useProfile();
 
+  const myPosts = useSelector(store => store.myPosts.posts);
+
   const { ToggleFollow } = useFollowUnfollow();
 
   const [isFollowing, setIsFollowing] = useState(profile?.isFollowing);
@@ -65,7 +67,7 @@ const Header = () => {
               <ul>
                 <li>
                   <span className="profile-stat-count">
-                    {profile.followingCount}
+                    {myPosts.length}
                   </span>{" "}
                   posts
                 </li>

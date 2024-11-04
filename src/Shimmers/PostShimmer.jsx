@@ -1,7 +1,6 @@
 import "./PostShimmer.scss"
 
 const PostShimmer = () => {
-    console.log("Shimmer Called ");
   return (
     <div className="post_container">
     <div className="post_header_shimmer">

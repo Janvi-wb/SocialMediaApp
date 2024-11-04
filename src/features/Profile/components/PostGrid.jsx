@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
-// //import { useMyPost } from "../hooks/useMyPost";
 
 //import { useSelector } from "react-redux";
 import { Link } from "react-router-dom/dist";
 import "../../Profile/Profile.scss";
-//import { useMyPost } from "../hooks/useMyPost";
 
 const PostGrid = ({ posts }) => {
   //const posts = useSelector((store) => store.myPosts.posts);
