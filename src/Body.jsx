@@ -79,6 +79,14 @@ const Body = () => {
       ),
     },
     {
+      path: "/profile/:username",
+      element: (
+        <Suspense fallback={<Loader />}>
+          <ProtectedRoute element={<Profile />} />
+        </Suspense>
+      ),
+    },
+    {
       path: "/post/:id",
       element: (
         <Suspense fallback={<Loader />}>
